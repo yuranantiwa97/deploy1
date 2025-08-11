@@ -116,7 +116,7 @@
                 {% for _ in range(rating_int) %}<span class="rating-star">&#9733;</span>{% endfor %}
                 <span class="ms-1 small">({{ rating_val }})</span>
               </td>
-              <td>{{ label_map.get(row['cluster_kmeans'], row['cluster_kmeans']) }}</td>
+              <td>{{ row['tier_label'] }}</td>
             </tr>
             {% endfor %}
           </tbody>
