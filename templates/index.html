@@ -67,14 +67,14 @@
                    value="{{ rating_max_req or rating_max }}" step="0.1" id="rangeRatingMax" />
           </div>
 
-          <!-- Kategori ramah (value = ID cluster) -->
+          <!-- Kategori (label unik) -->
           <div class="col-md-12">
             <label class="filter-label">Kategori rekomendasi (opsional)</label>
-            <select class="form-select" name="cluster_id">
+            <select class="form-select" name="cluster_label">
               <option value="">Semua kategori</option>
-              {% for opt in cluster_options %}
-                <option value="{{ opt.id }}" {{ 'selected' if (selected_cluster_id is not none and opt.id == selected_cluster_id) else '' }}>
-                  {{ opt.label }}
+              {% for lab in tier_options %}
+                <option value="{{ lab }}" {{ 'selected' if lab == selected_cluster_label else '' }}>
+                  {{ lab }}
                 </option>
               {% endfor %}
             </select>
@@ -109,11 +109,12 @@
               <td>{{ loop.index }}</td>
               <td>{{ row['Nama Restoran'] }}</td>
               <td>{{ row['Preferensi Makanan'] }}</td>
-              <td>{{ row['Harga Rata-Rata Makanan di Toko (Rp)'] | rupiah }}</td>
+              <td>{{ row[CSV_COL_PRICE] | default(row['Harga Rata-Rata Makanan di Toko (Rp)']) | rupiah }}</td>
               <td>
-                {% set rating_int = (row['Rating Toko'] or 0)|int %}
+                {% set rating_val = row['Rating Toko'] %}
+                {% set rating_int = (rating_val or 0)|int %}
                 {% for _ in range(rating_int) %}<span class="rating-star">&#9733;</span>{% endfor %}
-                <span class="ms-1 small">({{ row['Rating Toko'] }})</span>
+                <span class="ms-1 small">({{ rating_val }})</span>
               </td>
               <td>{{ label_map.get(row['cluster_kmeans'], row['cluster_kmeans']) }}</td>
             </tr>
@@ -128,7 +129,7 @@
   </div>
 
   <script>
-    // format Rupiah sederhana untuk label slider
+    // label slider
     const toRp = n => 'Rp ' + (parseInt(n||0,10)).toLocaleString('id-ID');
     document.addEventListener('DOMContentLoaded', () => {
       const hargaMin = document.getElementById('rangeHargaMin');
@@ -138,11 +139,11 @@
       const hargaLabel = document.getElementById('harga-range');
       const ratingLabel = document.getElementById('rating-range');
 
-      const updateHarga = () => { if (hargaLabel) hargaLabel.textContent = toRp(hargaMin.value) + ' - ' + toRp(hargaMax.value); };
+      const updateHarga  = () => { if (hargaLabel)  hargaLabel.textContent  = toRp(hargaMin.value) + ' - ' + toRp(hargaMax.value); };
       const updateRating = () => { if (ratingLabel) ratingLabel.textContent = ratingMin.value + ' - ' + ratingMax.value; };
 
-      if (hargaMin && hargaMax) { hargaMin.oninput = updateHarga; hargaMax.oninput = updateHarga; updateHarga(); }
-      if (ratingMin && ratingMax) { ratingMin.oninput = updateRating; ratingMax.oninput = updateRating; updateRating(); }
+      if (hargaMin && hargaMax) { hargaMin.oninput = updateHarga;  hargaMax.oninput = updateHarga;  updateHarga(); }
+      if (ratingMin && ratingMax){ ratingMin.oninput = updateRating; ratingMax.oninput = updateRating; updateRating(); }
     });
   </script>
 </body>
