@@ -45,7 +45,7 @@ q1, q2 = _prices_clean.quantile([0.33, 0.66])
 
 def _tier_name(v):
     if v <= q1:  return "Hemat"
-    if v <= q2:  return "Sedang"
+    if v <= q2:  return "Menengah"
     return "Premium"
 
 _summary = (
@@ -57,6 +57,9 @@ id_to_label = {}
 for _, row in _summary.iterrows():
     cid = int(row[CSV_COL_CLUSTER])
     id_to_label[cid] = _tier_name(row["harga_mean"])
+    tier_order = {"Hemat": 0, "Sedang": 1, "Premium": 2}
+    tier_options = sorted(set(id_to_label.values()), key=lambda t: tier_order.get(t, 99))
+
 
 cluster_options = [{"id": cid, "label": lab}
                    for cid, lab in sorted(id_to_label.items(), key=lambda x: x[0])]
@@ -77,8 +80,8 @@ def index():
     if rating_min > rating_max: rating_min, rating_max = rating_max, rating_min
 
     # cluster pilihan (pakai cluster_id; fallback ke 'cluster' lama)
-    cluster_id_val = (request.values.get("cluster_id") or request.values.get("cluster") or "").strip()
-    selected_cluster_id = int(cluster_id_val) if cluster_id_val.isdigit() else None
+    cluster_label = (request.values.get("cluster_label") or "").strip()  # pakai label, bukan ID
+    cluster_id_val = (request.values.get("cluster") or "").strip()       # fallback lama (opsional)
 
     # filter
     hasil = df.copy()
@@ -94,19 +97,26 @@ def index():
         (rating_num >= rating_min) & (rating_num <= rating_max)
     ]
 
-    if selected_cluster_id is not None:
-        hasil = hasil[hasil[CSV_COL_CLUSTER] == selected_cluster_id]
+    if cluster_label:
+        # filter semua cluster yang labelnya sama
+        target_ids = [cid for cid, lab in id_to_label.items() if lab == cluster_label]
+        hasil = hasil[hasil[CSV_COL_CLUSTER].isin(target_ids)]
+    elif cluster_id_val.isdigit():
+        # kompatibel lama: kalau user masih kirim ?cluster=1
+        hasil = hasil[hasil[CSV_COL_CLUSTER] == int(cluster_id_val)]
+
 
     return render_template(
-        "index.html",
-        hasil=hasil.to_dict("records"),
-        jenis_list=JENIS_LIST,
+    "index.html",
+    hasil=hasil.to_dict("records"),
+    jenis_list=JENIS_LIST,
 
-        # dropdown kategori
-        cluster_options=cluster_options,
-        selected_cluster_id=selected_cluster_id,
-        label_map=id_to_label,
+    # kirim opsi label unik & pilihan yang terpilih
+    tier_options=tier_options,
+    selected_cluster_label=cluster_label,
 
+    # untuk menampilkan label di tabel
+    label_map=id_to_label,
         # slider + nilai terpilih
         harga_min=HMIN, harga_max=HMAX,
         harga_min_req=harga_min, harga_max_req=harga_max,
