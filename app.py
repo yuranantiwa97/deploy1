@@ -63,7 +63,8 @@ for _, row in _summary.iterrows():
 tier_order   = {"Hemat": 0, "Menengah": 1, "Premium": 2}
 tier_options = sorted(set(id_to_label.values()), key=lambda t: tier_order.get(t, 99))
 # ================================================
-
+if not tier_options:
+    tier_options = ["Hemat", "Menengah", "Premium"]
 @app.route("/", methods=["GET", "POST"])
 def index():
     # ambil input

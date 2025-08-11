@@ -109,7 +109,7 @@
               <td>{{ loop.index }}</td>
               <td>{{ row['Nama Restoran'] }}</td>
               <td>{{ row['Preferensi Makanan'] }}</td>
-              <td>{{ row[CSV_COL_PRICE] | default(row['Harga Rata-Rata Makanan di Toko (Rp)']) | rupiah }}</td>
+              <td>{{ row['Harga Rata-Rata Makanan di Toko (Rp)'] | rupiah }}</td>
               <td>
                 {% set rating_val = row['Rating Toko'] %}
                 {% set rating_int = (rating_val or 0)|int %}
