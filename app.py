@@ -3,7 +3,7 @@ import pandas as pd
 import os
 from collections import Counter
 
-# --- setup dasar ---
+# ====== setup dasar ======
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__, template_folder=os.path.join(BASE_DIR, "templates"))
 
@@ -12,58 +12,55 @@ def rupiah(v):
         return "Rp " + f"{int(float(v)):,}".replace(",", ".")
     except Exception:
         return str(v)
+
+# daftarkan filter ke Jinja
 app.jinja_env.filters["rupiah"] = rupiah
 
-# --- data ---
+# ====== data ======
+CSV_COL_PRICE = "Harga Rata-Rata Makanan di Toko (Rp)"
+CSV_COL_RATING = "Rating Toko"
+CSV_COL_NAME = "Nama Restoran"
+CSV_COL_PREF = "Preferensi Makanan"
+CSV_COL_CLUSTER = "cluster_kmeans"
+
 csv_path = os.path.join(BASE_DIR, "data_with_cluster.csv")
 df = pd.read_csv(csv_path)
 
-# batas global (buat default slider)
-HMIN, HMAX = int(df['Harga Rata-Rata Makanan di Toko (Rp)'].min()), int(df['Harga Rata-Rata Makanan di Toko (Rp)'].max())
-RMIN, RMAX = float(df['Rating Toko'].min()), float(df['Rating Toko'].max())
+# batas slider global
+_prices_num = pd.to_numeric(df[CSV_COL_PRICE], errors="coerce")
+_ratings_num = pd.to_numeric(df[CSV_COL_RATING], errors="coerce")
+HMIN, HMAX = int(_prices_num.min()), int(_prices_num.max())
+RMIN, RMAX = float(_ratings_num.min()), float(_ratings_num.max())
 
-# jenis makanan (sekali hitung)
+# list jenis (sekali hitung)
 _all_jenis = set()
-for s in df['Preferensi Makanan'].dropna():
-    for item in str(s).split(','):
+for s in df[CSV_COL_PREF].dropna():
+    for item in str(s).split(","):
         _all_jenis.add(item.strip())
 JENIS_LIST = sorted(_all_jenis)
 
-# --- Friendly Cluster Labels (sekali hitung) ---
-_prices = df["Harga Rata-Rata Makanan di Toko (Rp)"].astype(float)
-q1, q2 = _prices.quantile([0.33, 0.66])
+# ====== Friendly Cluster Labels (tier saja) ======
+_prices_clean = _prices_num.dropna()
+q1, q2 = _prices_clean.quantile([0.33, 0.66])
 
 def _tier_name(v):
     if v <= q1:  return "Hemat"
     if v <= q2:  return "Sedang"
     return "Premium"
 
-def _top_pref(series):
-    c = Counter()
-    for s in series.dropna().astype(str):
-        for w in s.split(","):
-            w = w.strip()
-            if w:
-                c[w] += 1
-    return c.most_common(1)[0][0] if c else "Campuran"
-
 _summary = (
-    df.groupby("cluster_kmeans", as_index=False)
-      .agg(
-          harga_mean=("Harga Rata-Rata Makanan di Toko (Rp)", "mean"),
-          rating_mean=("Rating Toko", "mean"),
-          top_pref=("Preferensi Makanan", _top_pref),
-      )
+    df.groupby(CSV_COL_CLUSTER, as_index=False)
+      .agg(harga_mean=(CSV_COL_PRICE, "mean"))
 )
 
 id_to_label = {}
 for _, row in _summary.iterrows():
-    cid = int(row["cluster_kmeans"])
-    label = f"{_tier_name(row['harga_mean'])} • {row['top_pref']} • ⭐{row['rating_mean']:.1f} • {rupiah(row['harga_mean'])}"
-    id_to_label[cid] = label
+    cid = int(row[CSV_COL_CLUSTER])
+    id_to_label[cid] = _tier_name(row["harga_mean"])
 
-cluster_options = [{"id": cid, "label": lab} for cid, lab in sorted(id_to_label.items(), key=lambda x: x[0])]
-# ------------------------------------------------
+cluster_options = [{"id": cid, "label": lab}
+                   for cid, lab in sorted(id_to_label.items(), key=lambda x: x[0])]
+# ==================================================
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -79,46 +76,38 @@ def index():
     if harga_min > harga_max: harga_min, harga_max = harga_max, harga_min
     if rating_min > rating_max: rating_min, rating_max = rating_max, rating_min
 
-    # cluster ramah (label) + kompatibel lama ('cluster' angka)
-    cluster_label = (request.values.get("cluster_label") or "").strip()
-    selected_cluster_id = None
-    if cluster_label:
-        if cluster_label.isdigit():
-            selected_cluster_id = int(cluster_label)
-        else:
-            selected_cluster_id = next((cid for cid, lab in id_to_label.items() if lab == cluster_label), None)
-    else:
-        _cluster_old = (request.values.get("cluster") or "").strip()
-        if _cluster_old.isdigit():
-            selected_cluster_id = int(_cluster_old)
+    # cluster pilihan (pakai cluster_id; fallback ke 'cluster' lama)
+    cluster_id_val = (request.values.get("cluster_id") or request.values.get("cluster") or "").strip()
+    selected_cluster_id = int(cluster_id_val) if cluster_id_val.isdigit() else None
 
     # filter
     hasil = df.copy()
     if nama:
-        hasil = hasil[hasil["Nama Restoran"].str.lower().str.contains(nama, na=False)]
+        hasil = hasil[hasil[CSV_COL_NAME].fillna("").str.lower().str.contains(nama)]
     if jenis:
-        hasil = hasil[hasil["Preferensi Makanan"].fillna("").str.contains(jenis, case=False)]
+        hasil = hasil[hasil[CSV_COL_PREF].fillna("").str.contains(jenis, case=False)]
+
+    harga_num = pd.to_numeric(hasil[CSV_COL_PRICE], errors="coerce")
+    rating_num = pd.to_numeric(hasil[CSV_COL_RATING], errors="coerce")
     hasil = hasil[
-        (hasil['Harga Rata-Rata Makanan di Toko (Rp)'] >= harga_min) &
-        (hasil['Harga Rata-Rata Makanan di Toko (Rp)'] <= harga_max) &
-        (hasil['Rating Toko'] >= rating_min) &
-        (hasil['Rating Toko'] <= rating_max)
+        (harga_num >= harga_min) & (harga_num <= harga_max) &
+        (rating_num >= rating_min) & (rating_num <= rating_max)
     ]
+
     if selected_cluster_id is not None:
-        hasil = hasil[hasil["cluster_kmeans"] == selected_cluster_id]
+        hasil = hasil[hasil[CSV_COL_CLUSTER] == selected_cluster_id]
 
     return render_template(
         "index.html",
         hasil=hasil.to_dict("records"),
         jenis_list=JENIS_LIST,
 
-        # dukung lama (angka) & baru (label ramah)
-        clusters=sorted(df['cluster_kmeans'].unique()),
+        # dropdown kategori
         cluster_options=cluster_options,
-        selected_cluster_label=cluster_label,
+        selected_cluster_id=selected_cluster_id,
         label_map=id_to_label,
 
-        # batas slider & nilai terpilih
+        # slider + nilai terpilih
         harga_min=HMIN, harga_max=HMAX,
         harga_min_req=harga_min, harga_max_req=harga_max,
         rating_min=RMIN, rating_max=RMAX,

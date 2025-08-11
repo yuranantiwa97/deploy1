@@ -67,13 +67,13 @@
                    value="{{ rating_max_req or rating_max }}" step="0.1" id="rangeRatingMax" />
           </div>
 
-          <!-- Cluster ramah -->
+          <!-- Kategori ramah (value = ID cluster) -->
           <div class="col-md-12">
             <label class="filter-label">Kategori rekomendasi (opsional)</label>
-            <select class="form-select" name="cluster_label">
+            <select class="form-select" name="cluster_id">
               <option value="">Semua kategori</option>
               {% for opt in cluster_options %}
-                <option value="{{ opt.label }}" {{ 'selected' if opt.label==selected_cluster_label else '' }}>
+                <option value="{{ opt.id }}" {{ 'selected' if (selected_cluster_id is not none and opt.id == selected_cluster_id) else '' }}>
                   {{ opt.label }}
                 </option>
               {% endfor %}
@@ -111,7 +111,7 @@
               <td>{{ row['Preferensi Makanan'] }}</td>
               <td>{{ row['Harga Rata-Rata Makanan di Toko (Rp)'] | rupiah }}</td>
               <td>
-                {% set rating_int = row['Rating Toko']|int %}
+                {% set rating_int = (row['Rating Toko'] or 0)|int %}
                 {% for _ in range(rating_int) %}<span class="rating-star">&#9733;</span>{% endfor %}
                 <span class="ms-1 small">({{ row['Rating Toko'] }})</span>
               </td>
@@ -128,12 +128,9 @@
   </div>
 
   <script>
-    // Format angka ke format Rupiah sederhana
-    function rupiah(n) {
-      n = parseInt(n || 0, 10);
-      return 'Rp ' + n.toLocaleString('id-ID');
-    }
-    document.addEventListener('DOMContentLoaded', function () {
+    // format Rupiah sederhana untuk label slider
+    const toRp = n => 'Rp ' + (parseInt(n||0,10)).toLocaleString('id-ID');
+    document.addEventListener('DOMContentLoaded', () => {
       const hargaMin = document.getElementById('rangeHargaMin');
       const hargaMax = document.getElementById('rangeHargaMax');
       const ratingMin = document.getElementById('rangeRatingMin');
@@ -141,22 +138,11 @@
       const hargaLabel = document.getElementById('harga-range');
       const ratingLabel = document.getElementById('rating-range');
 
-      function updateHarga() {
-        if (hargaLabel) hargaLabel.textContent = rupiah(hargaMin.value) + ' - ' + rupiah(hargaMax.value);
-      }
-      function updateRating() {
-        if (ratingLabel) ratingLabel.textContent = ratingMin.value + ' - ' + ratingMax.value;
-      }
-      if (hargaMin && hargaMax) {
-        hargaMin.oninput = updateHarga;
-        hargaMax.oninput = updateHarga;
-        updateHarga();
-      }
-      if (ratingMin && ratingMax) {
-        ratingMin.oninput = updateRating;
-        ratingMax.oninput = updateRating;
-        updateRating();
-      }
+      const updateHarga = () => { if (hargaLabel) hargaLabel.textContent = toRp(hargaMin.value) + ' - ' + toRp(hargaMax.value); };
+      const updateRating = () => { if (ratingLabel) ratingLabel.textContent = ratingMin.value + ' - ' + ratingMax.value; };
+
+      if (hargaMin && hargaMax) { hargaMin.oninput = updateHarga; hargaMax.oninput = updateHarga; updateHarga(); }
+      if (ratingMin && ratingMax) { ratingMin.oninput = updateRating; ratingMax.oninput = updateRating; updateRating(); }
     });
   </script>
 </body>
