@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hasil Rekomendasi</title>
+</head>
+<body>
+    <h2>Hasil Rekomendasi Restoran</h2>
+    {% if hasil %}
+    <table border="1">
+        <tr>
+            <th>Nama Restoran</th>
+            <th>Jenis Makanan</th>
+            <th>Harga</th>
+            <th>Rating</th>
+        </tr>
+        {% for row in hasil %}
+        <tr>
+            <td>{{ row['Nama Restoran'] }}</td>
+            <td>{{ row['Preferensi Makanan'] }}</td>
+            <td>{{ row['Harga Rata-Rata Makanan di Toko (Rp)'] }}</td>
+            <td>{{ row['Rating Toko'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>Tidak ada restoran yang cocok dengan filter.</p>
+    {% endif %}
+    <a href="{{ url_for('index') }}">Kembali</a>
+</body>
+</html>

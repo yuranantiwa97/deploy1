@@ -1,0 +1,292 @@
+Nama Restoran,Preferensi Makanan,Lokasi Restoran,Harga Rata-Rata Makanan di Toko (Rp),Rating Toko,Jenis Suasana,Toko Sering Diskon (Ya/Tidak),Variasi Makanan,Pelayanan Khusus Pasangan (Ya/Tidak),Entertainment,Keramaian Restoran,Disajikan atau Ambil Sendiri,All You Can Eat atau Ala Carte,cluster_kmeans
+"Mie Bandung Chinese Food, Ngampilan",Chinese,3.23 km,39000,4.7,Santai,Tidak,"Bakmie, Aneka nasi, Chinese",Tidak,3,3,Disajikan,Ala Carte,2
+"Soto Tauco Pekalongan Bu Iswi, Jalan Bimokurdo No.46, Gondokusuman, Demangan",Indonesia,3.01 km,19000,3.7,Santai,Tidak,"Bakso & soto, Cepat saji, Minuman",Tidak,2,2,Disajikan,Ala Carte,0
+"Spesial Bakso Pak Jum Balai Kota, Umbulharjo",Indonesia,1.44 km,18000,3.6,Santai,Tidak,"Bakso & soto, Jajanan, Minuman",Tidak,2,2,Disajikan,Ala Carte,0
+Soto Ayam Kampung Dan Soto Daging Sapi Pak Ben,Indonesia,0.83 km,22000,3.8,Santai,Tidak,"Bakso & soto, Minuman",Tidak,1,2,Disajikan,Ala Carte,0
+Toba Tabo,Chinese,2.13 km,40000,4.7,Santai,Tidak,"Cepat saji, Bakmie, Chinese",Tidak,1,3,Disajikan,Ala Carte,2
+"Sop Ayam Klaten, Mantrijeron",Indonesia,3.1 km,16000,4.4,Santai,Tidak,"Cepat saji, Minuman, Bakso & soto",Tidak,4,3,Disajikan,Ala Carte,0
+"Legend Coffee, Yogyakarta",Western,3.21 km,37000,4.3,Santai,Tidak,"Chicken & duck, Beverages, Pizza & pasta, Coffee, Rice, Noodles, Western",Tidak,2,1,Disajikan,Ala Carte,0
+"Martabak Okonomiyaki BAMLY, Sonopakis",Japanese,5.58 km,25000,4.6,Santai,Ya,"Chicken & duck, Japanese, Martabak",Tidak,2,3,Disajikan,Ala Carte,0
+"Nasi Goreng Gemilang, Gedongkuning",Chinese,1.97 km,19000,4.7,Santai,Ya,Chinese,Tidak,3,2,Disajikan,Ala Carte,0
+"Restoran Mahkota (Tiong San), Pajeksan",Chinese,3.17 km,132000,4.7,Santai,Tidak,"Chinese, Ayam & bebek, Aneka nasi, Bakmie",Tidak,3,1,Disajikan,Ala Carte,1
+"Curryin, Perumnas",Japanese,5.8 km,42000,4.6,Santai,Tidak,Japanese,Tidak,2,1,Disajikan,Ala Carte,2
+"Marugame Udon, Hartono Mall Jogja",Japanese,6.02 km,68000,4.8,Formal,Tidak,Japanese,Tidak,1,1,Disajikan,Ala Carte,2
+"YOSHINOYA BEEF BOWL, Transmart Maguwoharjo",Japanese,4.89 km,64000,4.7,Formal,Tidak,"Japanese, Fast food, Chicken & duck, Rice",Tidak,2,3,Disajikan,Ala Carte,2
+"Sushi Battousai, Suryodiningratan",Japanese,3.31 km,32000,4.5,Formal,Tidak,"Japanese, Snacks, Chinese",Tidak,1,2,Disajikan,Ala Carte,0
+"Mochi Sakura, Plaza Ambarukmo",Japanese,3.73 km,41000,4.2,Santai,Ya,"Japanese, Snacks, Sweets",Tidak,4,1,Disajikan,Ala Carte,2
+"Soto Pak Zaenal Barokah, Warungboto Umbulharjo",Indonesia,0.65 km,15000,4.5,Santai,Tidak,"Minuman, Bakso & soto",Tidak,4,2,Disajikan,Ala Carte,0
+"Warung Lawas, Prawirotaman",Western,1.9 km,41000,4.7,Santai,Tidak,"Pizza & pasta, Chicken & duck, Western, Rice, Beverages, Snacks, Sweets, Fast food, Bakery, Bakso & soto, Noodles, Coffee",Tidak,3,2,Disajikan,Ala Carte,2
+"Mediterranea Restaurant by Kamil, Matrijeron",Western,2.61 km,76000,4.8,Santai,Tidak,"Pizza & pasta, Western",Tidak,1,2,Disajikan,Ala Carte,2
+"Rustik Bistro & Bar, Hotel Harper Malioboro Yogyakarta",Western,3.92 km,32000,3.8,Formal,Tidak,"Rice, Beverages, Western",Tidak,2,3,Disajikan,Ala Carte,0
+"Gyudel Bowl & Nasi Goreng, Depok",Japanese,5.2 km,29000,4.7,Formal,Tidak,"Rice, Fast food, Japanese",Tidak,2,1,Disajikan,Ala Carte,0
+"Sushi Story, Gejayan",Japanese,5.76 km,62000,4.6,Formal,Tidak,"Seafood, Japanese",Tidak,2,3,Disajikan,Ala Carte,2
+"Burgerax, Imogiri Timur",Western,3.24 km,38000,4.6,Santai,Tidak,"Snacks, Western, Fast food",Tidak,4,2,Disajikan,Ala Carte,2
+"Pulung Steak & Ribs, Catur Tunggal",Western,3.64 km,43000,4.6,Santai,Ya,Western,Tidak,1,3,Disajikan,Ala Carte,2
+"Burger Bangor Express, Bantul",Western,4.22 km,40000,4.8,Santai,Tidak,"Western, Fast food, Chicken & duck",Tidak,3,1,Disajikan,Ala Carte,2
+"BurgeriOr, Tempel",Western,4.12 km,40000,4.7,Santai,Ya,"Western, Fast food, Snacks",Tidak,3,2,Disajikan,Ala Carte,2
+"Mamam Food, Pringgolayan Banguntapan",Western,2.17 km,27000,4.7,Santai,Tidak,"Western, Pizza & pasta, Rice",Tidak,2,1,Disajikan,Ala Carte,0
+"Yamie Panda, Cokroaminoto",Chinese,4.3 km,28000,4.7,Santai,Ya,"Bakmie, Chinese, Bakso & soto",Ya,3,1,Disajikan,Ala Carte,0
+"Kedai Mie Nyinyir, Sorogenen",Indonesia,1.46 km,22000,4.7,Santai,Ya,"Bakso & soto, Bakmie",Tidak,2,2,Disajikan,Ala Carte,0
+"Dudidu Dimsum, ISI",Chinese,5.54 km,40000,4.6,Santai,Ya,"Chinese, Japanese, Korean",Tidak,4,2,Disajikan,Ala Carte,2
+"Kwetiau Goreng Dan Nasi Goreng Seafood Makjoss, Batikan",Chinese,0.72 km,25000,4.6,Santai,Tidak,"Chinese, Seafood, Bakmie",Tidak,1,3,Disajikan,Ala Carte,0
+"Double O Resto, Tegalrejo",Japanese,4.61 km,30000,4.6,Santai,Tidak,"Coffee, Beverages, Japanese",Tidak,1,1,Disajikan,Ala Carte,0
+"HokBen Kitchen, Godean Jogjakarta",Japanese,5.22 km,49000,4.7,Formal,Tidak,"Fast food, Japanese",Tidak,4,1,Disajikan,Ala Carte,2
+Salad Sehat Fd,Japanese,4.79 km,30000,4.7,Santai,Tidak,"Fast food, Japanese, Korean",Tidak,3,3,Disajikan,Ala Carte,0
+"Bakmi Nikmat Rasa, Soragan",Indonesia,5.29 km,59000,4.6,Santai,Tidak,Japanese,Tidak,3,1,Disajikan,Ala Carte,2
+"GYU KATSU, CONDONGCATUR",Japanese,5.91 km,32000,4.7,Formal,Ya,"Japanese, Rice",Tidak,2,3,Disajikan,Ala Carte,0
+"Vegan Cafe Black Forest, Brontokusuman",Chinese,2.25 km,22000,4.7,Santai,Tidak,"Minuman, Chinese, Barat",Tidak,2,3,Disajikan,Ala Carte,0
+"Grennesia Salad Bar & Breakfast, Parangtritis",Western,2.23 km,22000,4.7,Formal,Tidak,"Rice, Western, Snacks",Tidak,1,3,Disajikan,Ala Carte,0
+"Chikuro Pakuwon Mall Jogja, Pakuwon Mall Lantai LG",Japanese,6.2 km,40000,4.6,Formal,Tidak,"Snacks, Japanese",Tidak,4,2,Disajikan,Ala Carte,2
+"Waroeng Steak And Shake, Tamansiswa",Western,1.18 km,40000,4.7,Santai,Tidak,Western,Tidak,2,1,Disajikan,Ala Carte,2
+"Burger King, Diponegoro",Western,4.32 km,57000,4.7,Santai,Ya,"Western, Fast food",Tidak,2,2,Disajikan,Ala Carte,2
+"ViaVia Jogja, Prawirotaman",Western,1.9 km,75000,4.8,Santai,Tidak,"Western, Indian, Pizza & pasta",Tidak,1,1,Disajikan,Ala Carte,2
+"AMco, Parangtritis",Japanese,2.47 km,108000,4.7,Formal,Tidak,"Western, Japanese, Pizza & pasta",Tidak,1,1,Disajikan,Ala Carte,1
+"The Rock Burger, Melati Wetan",Western,2.42 km,50000,4.7,Santai,Tidak,"Western, Rice, Fast food",Tidak,2,1,Disajikan,Ala Carte,2
+"Lotek Gado-Gado Bu Ning, Tamansiswa",Indonesia,1.34 km,26000,4.7,Santai,Tidak,"Aneka nasi, Ayam & bebek, Bakso & soto",Tidak,4,3,Disajikan,Ala Carte,0
+"Pecel Lele Dan Bakso Mie Ayam Sakolehe, Umbulharjo",Indonesia,0.53 km,20000,4.5,Santai,Tidak,"Aneka nasi, Ayam & bebek, Bakso & soto",Tidak,3,2,Disajikan,Ala Carte,0
+"Pork King - Ricebox Babi, Gondokusuman",Chinese,2.22 km,52000,4.8,Santai,Tidak,"Aneka nasi, Cepat saji, Chinese",Tidak,4,1,Disajikan,Ala Carte,2
+"PigGoo Kitchen, Baciro",Chinese,2.65 km,52000,4.5,Santai,Tidak,"Bakmie, Chinese, Aneka nasi",Tidak,3,3,Disajikan,Ala Carte,2
+"Soto Sehati, Umbulharjo",Indonesia,0.75 km,26000,4.3,Santai,Tidak,Bakso & soto,Tidak,3,3,Disajikan,Ala Carte,0
+"Bakso Urat & Mie Ayam Rizky, Sorogenen",Indonesia,1.5 km,17000,4.8,Santai,Tidak,"Bakso & soto, Bakmie",Tidak,2,2,Disajikan,Ala Carte,0
+Izakaya Japanese Resto,Japanese,5.55 km,120000,4.8,Formal,Tidak,"Beverages, Japanese, Seafood",Tidak,4,2,Disajikan,Ala Carte,1
+Yani's Kitchen,Chinese,3.58 km,26000,4.4,Santai,Tidak,"Chinese, Ayam & bebek, Aneka nasi, Bakmie",Tidak,2,3,Disajikan,Ala Carte,0
+"Seafood 99, Wonocatur",Chinese,2.33 km,23000,4.7,Santai,Tidak,"Chinese, Seafood, Aneka nasi",Tidak,1,1,Disajikan,Ala Carte,0
+"Hotaru Ramen, Banguntapan",Japanese,2.84 km,36000,4.0,Santai,Tidak,"Fast food, Japanese, Noodles",Tidak,4,3,Disajikan,Ala Carte,0
+Kantin Mama Mirza,Indonesia,0.99 km,17000,4.2,Santai,Tidak,"Jajanan, Bakso & soto, Aneka nasi",Tidak,3,2,Disajikan,Ala Carte,0
+"Mitsuru Ramen, Foodcourt135",Japanese,4.87 km,35000,4.3,Santai,Tidak,Japanese,Tidak,1,2,Disajikan,Ala Carte,0
+"Warung Ramen N Katsu, Chapter 1 Menteri Supeno",Japanese,0.74 km,30000,4.6,Santai,Tidak,Japanese,Tidak,2,2,Disajikan,Ala Carte,0
+Deta Kitchen,Japanese,5.68 km,16000,4.4,Santai,Tidak,"Japanese, Chinese",Tidak,3,2,Disajikan,Ala Carte,0
+"Chicken Katsu Domreneo, Suryodiningratan",Japanese,3.01 km,21000,3.4,Santai,Ya,"Japanese, Rice, Chicken & duck",Tidak,1,3,Disajikan,Ala Carte,0
+"Sushi Yay, Selokan Yogya",Japanese,5.11 km,82000,4.7,Santai,Ya,"Japanese, Rice, Fast food, Chicken & duck",Tidak,4,2,Disajikan,Ala Carte,2
+Tanoshi Bedjo Homestay,Japanese,6.4 km,66000,4.5,Santai,Ya,"Japanese, Rice, Sate",Tidak,1,1,Disajikan,Ala Carte,2
+Kantin Siap Saji Zupa Soup The Eifel,Western,1.56 km,22000,3.9,Santai,Tidak,"Pizza & pasta, Rice, Western",Tidak,2,2,Disajikan,Ala Carte,0
+Penyetan Ayam Bakar Dan Suki Tomyam Yss Food,Japanese,6.09 km,32000,4.8,Santai,Tidak,"Rice, Chicken & duck, Japanese",Tidak,2,3,Disajikan,Ala Carte,0
+"Bento Yay, Selokan Yogya",Japanese,5.11 km,58000,4.7,Formal,Ya,"Rice, Japanese, Chicken & duck",Tidak,2,1,Disajikan,Ala Carte,2
+"Nikkou Ramen, Pakualaman",Japanese,1.64 km,32000,4.2,Santai,Tidak,"Rice, Noodles, Japanese",Tidak,4,3,Disajikan,Ala Carte,0
+"d'Sushi & Takoyaki, Rejodadi Sidorejo",Japanese,5.95 km,34000,4.4,Santai,Tidak,"Rice, Snacks, Japanese",Tidak,1,2,Disajikan,Ala Carte,0
+"Wangoen Zuppa Soup, Umbulharjo",Western,0.17 km,20000,4.7,Santai,Tidak,"Snacks, Western",Tidak,3,2,Disajikan,Ala Carte,0
+"Burgerax, Prawirotaman",Western,2.02 km,38000,4.7,Santai,Tidak,"Snacks, Western, Fast food",Tidak,3,3,Disajikan,Ala Carte,2
+"Kedai Jagoan Moy-Moy, Tamsis",Chinese,1.32 km,12000,4.7,Santai,Tidak,"Sweets, Chinese",Tidak,4,2,Disajikan,Ala Carte,0
+"Waroeng Steak and Shake, Demangan",Western,3.73 km,40000,4.7,Santai,Tidak,Western,Tidak,2,1,Disajikan,Ala Carte,2
+"Waroeng Steak and Shake, Jalan Bantul",Western,4.08 km,40000,4.7,Santai,Tidak,Western,Tidak,1,2,Disajikan,Ala Carte,2
+"Spark Resto And Sports Bar, Prawirotaman",Western,2.21 km,36000,4.7,Santai,Ya,"Western, Beverages, Sate",Tidak,3,3,Disajikan,Ala Carte,0
+"Dapur Mamika, Jl Sisingamangaraja Gg Menur",Western,1.68 km,18000,3.9,Santai,Tidak,"Western, Chicken & duck, Rice",Tidak,4,1,Disajikan,Ala Carte,0
+"Burgerax, Demangan Baru",Western,3.59 km,38000,4.6,Santai,Tidak,"Western, Snacks, Fast food",Tidak,4,3,Disajikan,Ala Carte,2
+"Pawon Mbokdis, Mantrigawen Lor",Japanese,2.28 km,20000,4.6,Santai,Tidak,"Aneka nasi, Bakmie, Chinese",Tidak,4,2,Disajikan,Ala Carte,0
+"Rm & Seafood 99, Sorowajan",Chinese,2.91 km,22000,4.2,Santai,Ya,"Aneka nasi, Bakmie, Chinese",Tidak,2,2,Disajikan,Ala Carte,0
+"Pecel Lele, Rawon Dan Soto Lamongan Yuk In, Giwangan, Umbulharjo",Indonesia,1.38 km,15000,3.9,Santai,Tidak,"Aneka nasi, Bakso & soto",Tidak,3,2,Disajikan,Ala Carte,0
+"Ayam Geprek DBC, Beskalan",Indonesia,3.01 km,21000,4.7,Santai,Tidak,"Aneka nasi, Bakso & soto, Ayam & bebek, Minuman",Tidak,1,1,Disajikan,Ala Carte,0
+"Nasi Goreng & Halal Chinesefood MakJoss, Rumah Pagar Biru Salon Yuli",Chinese,0.72 km,25000,4.5,Santai,Ya,"Aneka nasi, Chinese, Bakmie",Tidak,2,2,Disajikan,Ala Carte,0
+"Soto Ayam 61, Gondomanan",Indonesia,3.01 km,19000,4.5,Santai,Tidak,"Ayam & bebek, Bakso & soto",Tidak,4,1,Disajikan,Ala Carte,0
+"Seblak Mang Cepot & Baso Aci Hoax, Umbulharjo",Indonesia,0.53 km,19000,4.6,Santai,Ya,"Ayam & bebek, Bakso & soto, Cepat saji",Tidak,3,3,Disajikan,Ala Carte,0
+"Buttersweet, Saman Utara",Western,3.14 km,20000,3.9,Santai,Tidak,"Bakery, Beverages, Western",Tidak,3,3,Disajikan,Ala Carte,0
+"Bakso Lontong Djeng Thathit, Suryodiningratan",Indonesia,3.06 km,16000,4.0,Santai,Tidak,Bakso & soto,Tidak,4,3,Disajikan,Ala Carte,0
+"Bakso Urat Arema Soringin, Langensari",Indonesia,3.02 km,19000,4.4,Santai,Tidak,Bakso & soto,Tidak,3,2,Disajikan,Ala Carte,0
+"Bakso Urat Cak Ari, Mataram",Indonesia,3.1 km,20000,4.5,Santai,Tidak,Bakso & soto,Tidak,4,2,Disajikan,Ala Carte,0
+"Soto Daging Lamongan Cak Ngun, Jl. Veteran No 212 Umbulharjo",Indonesia,0.43 km,24000,4.5,Santai,Tidak,Bakso & soto,Tidak,2,2,Disajikan,Ala Carte,0
+"Agenda Resto & Vibes, Arkadia",Western,2.04 km,48000,4.3,Santai,Tidak,"Beverages, Pizza & pasta, Western",Tidak,1,2,Disajikan,Ala Carte,2
+Raja Sate & Soto,Indonesia,0.76 km,27000,4.9,Santai,Tidak,"Cepat saji, Sate, Bakso & soto",Tidak,1,2,Disajikan,Ala Carte,0
+CHICKATS,Japanese,6.4 km,25000,4.7,Santai,Tidak,"Chicken & duck, Rice, Japanese",Tidak,3,1,Disajikan,Ala Carte,0
+Chinese Food / Sea Food Kondang,Chinese,2.33 km,31000,4.8,Santai,Tidak,"Chinese, Ayam & bebek, Seafood",Tidak,4,2,Disajikan,Ala Carte,0
+Suguhand Cafe,Western,3.35 km,111000,4.4,Santai,Tidak,"Coffee, Western, Pizza & pasta",Tidak,3,2,Disajikan,Ala Carte,1
+"HokBen, Kaliurang",Japanese,6.13 km,49000,4.8,Formal,Tidak,"Fast food, Japanese",Tidak,2,3,Disajikan,Ala Carte,2
+"Pop Mart, Laksda Adi Sucipto (Korner)",Western,4.04 km,22000,4.7,Santai,Tidak,"Fast food, Western, Coffee",Tidak,1,1,Disajikan,Ala Carte,0
+"Tahu Walik & Soto Warisan, Masjid Umbulharjo",Indonesia,0.53 km,19000,4.6,Santai,Tidak,"Jajanan, Cepat saji, Bakso & soto",Tidak,3,2,Disajikan,Ala Carte,0
+"HokBen Kitchen, Brontokusuman Parangtritis",Japanese,2.29 km,49000,4.8,Formal,Tidak,"Japanese, Fast food",Tidak,4,1,Disajikan,Ala Carte,2
+"Hakata Ikkousha, Demangan Baru",Japanese,3.92 km,80000,4.7,Formal,Tidak,"Japanese, Noodles",Tidak,2,3,Disajikan,Ala Carte,2
+"Tanoshii Sushi, Pogung Dalangan",Japanese,6.4 km,58000,4.7,Santai,Ya,"Japanese, Rice, Korean, Snacks, Fast food",Tidak,3,2,Disajikan,Ala Carte,2
+"Pizza Hut, Sudirman",Western,3.68 km,119000,4.7,Formal,Tidak,"Pizza & pasta, Fast food, Western",Tidak,3,3,Disajikan,Ala Carte,1
+"Roaster and Bear, P. Mangkubumi",Western,3.87 km,87000,4.7,Santai,Tidak,"Rice, Chicken & duck, Beverages, Snacks, Sweets, Western, Coffee, Pizza & pasta",Tidak,3,1,Disajikan,Ala Carte,1
+"Essen Choco Pot, Gedong Kuning",Western,1.8 km,35000,4.7,Santai,Tidak,"Rice, Western, Beverages",Tidak,4,2,Disajikan,Ala Carte,0
+"Zona Seafood, Kotabaru",Chinese,3.24 km,44000,4.8,Santai,Tidak,"Seafood, Chinese",Tidak,3,3,Disajikan,Ala Carte,2
+Burgerax Demangan 2,Western,3.57 km,38000,4.2,Santai,Tidak,"Snacks, Fast food, Western",Tidak,4,3,Disajikan,Ala Carte,2
+"Makan Burger & Toast, Mantrirejon",Western,3.01 km,21000,4.6,Santai,Tidak,Western,Tidak,1,2,Disajikan,Ala Carte,0
+"Reisban Coffee Shop, Menukan",Western,2.13 km,25000,4.7,Santai,Tidak,"Western, Coffee, Beverages",Tidak,1,1,Disajikan,Ala Carte,0
+"Pupa Meatshop, Banguntapan",Western,2.58 km,47000,4.8,Santai,Ya,"Western, Japanese, Korean",Tidak,1,2,Disajikan,Ala Carte,2
+"Pupa Meatshop, Prawirotaman",Western,2.19 km,47000,4.9,Santai,Ya,"Western, Japanese, Korean",Tidak,3,1,Disajikan,Ala Carte,2
+"Pepper Lunch, Hartono Mall",Japanese,6.02 km,92000,4.9,Formal,Ya,"Western, Japanese, Rice, Chicken & duck",Tidak,3,1,Disajikan,Ala Carte,1
+"King Star Kebab, Nogorojo",Western,3.33 km,23000,4.5,Santai,Tidak,"Western, Snacks",Tidak,3,2,Disajikan,Ala Carte,0
+"Yamie Panda, Kridosono",Chinese,3.04 km,28000,4.7,Santai,Ya,"Bakmie, Chinese",Ya,1,2,Disajikan,Ala Carte,0
+"Warung Makan Bu Sri, Umbulharjo",Indonesia,1.1 km,13000,4.4,Santai,Tidak,"Aneka nasi, Ayam & bebek, Bakso & soto",Tidak,1,3,Disajikan,Ala Carte,0
+"Rumah Makan Terang Mulyo, Katamso",Chinese,2.07 km,42000,4.8,Santai,Ya,"Aneka nasi, Bakmie, Chinese",Tidak,4,3,Disajikan,Ala Carte,2
+SGPC Sop Penyetan Bu Wiryo Cendana,Indonesia,1.49 km,18000,4.8,Santai,Tidak,"Aneka nasi, Bakso & soto",Tidak,3,3,Disajikan,Ala Carte,0
+"Berkah Abadi, Pasar Kranggan",Chinese,4.13 km,28000,4.2,Santai,Tidak,"Ayam & bebek, Chinese",Tidak,1,2,Disajikan,Ala Carte,0
+"Mie Ayam Dan Bakso Babaran, Umbulharjo",Indonesia,0.29 km,17000,4.5,Santai,Tidak,"Bakmie, Bakso & soto",Tidak,3,2,Disajikan,Ala Carte,0
+Yamie Singkawang,Chinese,2.08 km,45000,4.7,Santai,Tidak,"Bakmie, Chinese",Tidak,4,3,Disajikan,Ala Carte,2
+"Easy Peasy Kitchen, Prawirotaman",Western,1.94 km,43000,4.8,Santai,Tidak,"Beverages, Western",Tidak,3,2,Disajikan,Ala Carte,2
+"Kiwae Ayam Kekinian, Nologaten",Western,4.29 km,30000,4.8,Santai,Ya,"Chicken & duck, Korean, Western",Tidak,2,1,Disajikan,Ala Carte,0
+"Pepper Lunch, Plaza Ambarrukmo",Japanese,3.72 km,92000,4.6,Formal,Ya,"Chicken & duck, Rice, Japanese",Tidak,4,3,Disajikan,Ala Carte,1
+Makmur Spesial B2 Food,Chinese,4.04 km,31000,4.6,Santai,Ya,"Chinese, Aneka nasi, Bakmie",Tidak,4,1,Disajikan,Ala Carte,0
+"Rice&Steak, Ngipik, Potorono, Banguntapan, Bantul",Chinese,4.18 km,27000,4.5,Santai,Ya,"Fast food, Chinese, Western",Tidak,4,2,Disajikan,Ala Carte,0
+"Japanese Town Snack, Matrijeron",Japanese,3.78 km,27000,4.4,Santai,Tidak,"Fast food, Japanese, Snacks",Tidak,2,3,Disajikan,Ala Carte,0
+"Seblak Asgar, Lowanu",Indonesia,1.42 km,33000,4.5,Santai,Tidak,"Jajanan, Bakso & soto",Tidak,4,2,Disajikan,Ala Carte,0
+"Tora Tora, Kaliurang",Japanese,5.24 km,28000,4.6,Santai,Ya,"Japanese, Rice",Tidak,3,2,Disajikan,Ala Carte,0
+"Jajan Fast Food, Sisingamangaraja",Western,1.69 km,18000,4.4,Santai,Tidak,"Rice, Fast food, Western",Tidak,3,3,Disajikan,Ala Carte,0
+"Sate Taichan Hitz, Gejayan",Japanese,3.63 km,32000,4.6,Santai,Tidak,"Snacks, Japanese, Sate",Tidak,2,3,Disajikan,Ala Carte,0
+"Kebab Turki Babarafi, Babarsari",Western,4.55 km,23000,4.2,Santai,Tidak,"Snacks, Western",Tidak,4,3,Disajikan,Ala Carte,0
+"Boom Burger, Seturan",Western,4.56 km,37000,4.7,Santai,Tidak,Western,Tidak,4,3,Disajikan,Ala Carte,0
+"Dang! Burger, Glagah Sari",Western,0.26 km,29000,4.6,Santai,Tidak,Western,Tidak,2,3,Disajikan,Ala Carte,0
+"Burger Bangor Express, Taman Siswa",Western,1.4 km,40000,4.7,Santai,Tidak,"Western, Fast food, Chicken & duck",Tidak,2,3,Disajikan,Ala Carte,2
+"Yamie Panda, Timoho",Chinese,1.91 km,28000,4.7,Santai,Ya,"Bakmie, Bakso & soto, Chinese",Ya,3,3,Disajikan,Ala Carte,0
+"Cak No Chinese Food, Jogoyudan",Chinese,3.72 km,25000,4.7,Santai,Ya,"Aneka nasi, Bakmie, Chinese",Tidak,3,1,Disajikan,Ala Carte,0
+Warung Sop Iga Dan Soto Betawi Bu Tya,Indonesia,1.08 km,28000,4.5,Santai,Tidak,"Aneka nasi, Bakso & soto",Tidak,3,3,Disajikan,Ala Carte,0
+"Bakso dan Mie Ayam Muncul, Jl. Nyi Wiji Adhisoro",Indonesia,0.86 km,14000,4.5,Santai,Tidak,Bakso & soto,Tidak,1,3,Disajikan,Ala Carte,0
+"Sop Ayam Pak Min Klaten, Taman Siswa",Indonesia,1.23 km,20000,4.7,Santai,Ya,"Bakso & soto, Ayam & bebek, Aneka nasi",Tidak,2,3,Disajikan,Ala Carte,0
+"Warung Makan Bu Week, Tegalturi",Indonesia,1.37 km,15000,4.3,Santai,Tidak,"Bakso & soto, Minuman",Tidak,4,3,Disajikan,Ala Carte,0
+"DF HEALTHY KITCHEN (DF FIT CLUB), Yk",Western,3.64 km,76000,4.9,Santai,Tidak,"Beverages, Rice, Western",Tidak,3,1,Disajikan,Ala Carte,2
+"Ono Dimsum, Baciro",Japanese,2.35 km,17000,4.6,Santai,Tidak,"Chinese, Jajanan",Tidak,4,2,Disajikan,Ala Carte,0
+"Sushiruma, Babarsari",Japanese,5.43 km,30000,4.6,Santai,Ya,Japanese,Tidak,4,2,Disajikan,Ala Carte,0
+"Hokben Kitchen, Seturan Jogja",Japanese,5.5 km,49000,4.8,Formal,Tidak,"Japanese, Fast food",Tidak,1,1,Disajikan,Ala Carte,2
+"Tom Sushi, Hartono Mall Jogja",Japanese,6.03 km,56000,4.7,Formal,Tidak,"Japanese, Fast food",Tidak,3,1,Disajikan,Ala Carte,2
+"Banzai, Mergangsan",Japanese,1.2 km,45000,4.8,Formal,Tidak,"Japanese, Fast food, Rice",Tidak,3,1,Disajikan,Ala Carte,2
+"RamenYa!, Plaza Ambarrukmo",Japanese,3.71 km,73000,4.6,Santai,Tidak,"Japanese, Rice, Noodles",Tidak,2,3,Disajikan,Ala Carte,2
+"Pizza Hut, Adi Sucipto Jogja",Western,3.99 km,119000,4.7,Formal,Tidak,"Pizza & pasta, Fast food, Western",Tidak,3,1,Disajikan,Ala Carte,1
+"Pizza Hut, Sultan Agung Yogyakarta",Western,1.49 km,119000,4.7,Formal,Tidak,"Pizza & pasta, Fast food, Western",Tidak,1,1,Disajikan,Ala Carte,1
+"Picnic! Pata X Sausage Tamansiswa, Jl. Tamansiswa No.49 Yogya",Western,1.24 km,29000,4.3,Santai,Tidak,"Pizza & pasta, Snacks, Western",Tidak,1,1,Disajikan,Ala Carte,0
+"Rumah Makan Tio Asli Ciu Chinese Food & Sea Food, Jetis",Chinese,3.84 km,120000,4.5,Santai,Tidak,"Seafood, Bakmie, Chinese",Tidak,4,2,Disajikan,Ala Carte,1
+"Manalagi KQ 5, Ngampilan",Chinese,3.7 km,26000,4.7,Santai,Tidak,"Seafood, Chinese",Tidak,1,2,Disajikan,Ala Carte,0
+"Lawson Shop, Tegalrejo",Japanese,4.43 km,44000,4.0,Formal,Tidak,"Snacks, Beverages, Japanese, Coffee, Korean",Tidak,3,3,Disajikan,Ala Carte,2
+"Burgerax, Glagahsari",Western,1.17 km,38000,4.2,Santai,Tidak,"Snacks, Western",Tidak,2,3,Disajikan,Ala Carte,2
+"Ini Baru Rajanya Steak, Banguntapan",Western,2.1 km,35000,4.6,Formal,Tidak,Western,Tidak,1,3,Disajikan,Ala Carte,0
+"Burger Bangor Express, Janti",Western,2.4 km,40000,4.7,Santai,Tidak,"Western, Fast food, Chicken & duck",Tidak,4,3,Disajikan,Ala Carte,2
+"Black Kebab, Wirobrajan",Middle Eastern,4.39 km,23000,4.4,Santai,Tidak,"Western, Middle Eastern, Snacks",Tidak,3,1,Disajikan,Ala Carte,0
+"Oz Resto & Cafe, Permata Demangan",Western,3.68 km,25000,4.7,Formal,Tidak,"Western, Pizza & pasta, Rice, Chicken & duck",Tidak,3,2,Disajikan,Ala Carte,0
+"Twisted Noodle, Gondokusuman",Chinese,3.54 km,12000,4.6,Santai,Tidak,"Bakmie, Chinese",Ya,2,2,Disajikan,Ala Carte,0
+"Yamie Panda, Demangan",Chinese,3.85 km,28000,4.7,Santai,Ya,"Bakmie, Chinese",Ya,2,2,Disajikan,Ala Carte,0
+"RM Makmur Chinese Food, Sosromenduran",Chinese,3.66 km,40000,4.7,Santai,Tidak,"Aneka nasi, Bakmie, Chinese",Tidak,2,3,Disajikan,Ala Carte,2
+"Brongkos Koyor dan Sop Buntut Mbak Ris, Balaikota",Indonesia,1.51 km,30000,4.7,Santai,Tidak,"Aneka nasi, Bakso & soto, Seafood",Tidak,2,1,Disajikan,Ala Carte,0
+Mie Ayam Goreng & Gado-gado Om Brewok,Indonesia,1.1 km,19000,4.6,Santai,Tidak,"Ayam & bebek, Bakmie, Bakso & soto",Tidak,1,3,Disajikan,Ala Carte,0
+"Bebek Peking dan Ayam Panggang Pak Gembul, Jl KH Ahmad Dahlan No 40",Chinese,3.16 km,45000,4.5,Santai,Tidak,"Ayam & bebek, Chinese, Aneka nasi",Tidak,1,2,Disajikan,Ala Carte,2
+"Soto Pak Zaenal, Dr. Supomo",Indonesia,0.86 km,15000,4.7,Santai,Tidak,Bakso & soto,Tidak,2,1,Disajikan,Ala Carte,0
+Bakso Lapangan Tembak Senayan - Cendana,Indonesia,1.52 km,42000,4.6,Santai,Tidak,"Bakso & soto, Aneka nasi, Bakmie",Tidak,3,1,Disajikan,Ala Carte,2
+"Soto Ayam Jadul Mak Yem, Sorogenen",Indonesia,1.43 km,10000,4.6,Santai,Tidak,"Bakso & soto, Minuman",Tidak,1,3,Disajikan,Ala Carte,0
+"Ayam Geprek & Rice Bowl Tobiko Mentai, Karangkajen",Japanese,1.94 km,23000,4.7,Santai,Tidak,"Chicken & duck, Japanese, Beverages",Tidak,1,3,Disajikan,Ala Carte,0
+"Funkydak, Komplek Colombo",Western,3.83 km,58000,4.7,Santai,Tidak,"Chicken & duck, Western, Fast food",Tidak,4,3,Disajikan,Ala Carte,2
+RM. Gajah jaya,Chinese,3.31 km,25000,4.6,Santai,Tidak,Chinese,Tidak,1,1,Disajikan,Ala Carte,0
+"Hore Steak Jogja, Jl. Cenderawasih 32b",Western,3.72 km,77000,4.1,Formal,Tidak,"Fast food, Beverages, Western",Tidak,2,3,Disajikan,Ala Carte,2
+"Ichiban Sushi, Hartono Mall",Japanese,6.2 km,52000,4.7,Formal,Tidak,Japanese,Tidak,4,3,Disajikan,Ala Carte,2
+"BOX MIE, Monjali",Japanese,5.2 km,24000,4.7,Santai,Tidak,"Japanese, Noodles, Korean",Tidak,4,2,Disajikan,Ala Carte,0
+"Warung Makan Tokyo, Titik Maps Sabi Jogja",Japanese,4.06 km,17000,4.2,Santai,Ya,"Rice, Japanese, Seafood",Tidak,3,1,Disajikan,Ala Carte,0
+"East Pork - #1 Sei Babi Kupang In Jogja, Ampel",Western,3.7 km,30000,4.7,Santai,Tidak,"Rice, Western, Sate",Tidak,2,1,Disajikan,Ala Carte,0
+"Kebab Jawa, Sorogenen",Western,1.54 km,18000,4.5,Santai,Tidak,Western,Tidak,4,2,Disajikan,Ala Carte,0
+"Iten Kitchen, PazelKitchen Sudirman",Western,3.66 km,26000,4.2,Formal,Tidak,"Western, Pizza & pasta",Tidak,1,2,Disajikan,Ala Carte,0
+Warung Toscana,Western,1.91 km,69000,4.6,Santai,Tidak,"Western, Pizza & pasta",Tidak,1,1,Disajikan,Ala Carte,2
+"Kedai Zu Pa ( Zuppa Soup & Pasta ) Kotabaru, Juadi",Western,3.23 km,21000,4.7,Santai,Tidak,"Western, Snacks, Pizza & pasta",Tidak,1,2,Disajikan,Ala Carte,0
+NABE COFFEE Soragan,Japanese,5.13 km,36000,4.8,Santai,Tidak,"Bakery, Japanese, Coffee",Tidak,3,2,Disajikan,Ala Carte,0
+"Mie Jakarta Express, Galeria Mall",Chinese,3.46 km,48000,4.6,Santai,Tidak,"Bakmie, Seafood, Chinese",Tidak,4,3,Disajikan,Ala Carte,2
+Soto Ayam Pak Satar,Indonesia,0.31 km,13000,4.5,Santai,Tidak,Bakso & soto,Tidak,3,2,Disajikan,Ala Carte,0
+"Mie Ayam Sae Raos, Jl Sidikan No. 71 Sorosutan",Indonesia,1.18 km,14000,4.2,Santai,Tidak,"Bakso & soto, Bakmie",Tidak,1,2,Disajikan,Ala Carte,0
+"Happy Juice & Soto Padang, Umbulharjo",Indonesia,0.77 km,18000,4.5,Santai,Tidak,"Bakso & soto, Minuman",Tidak,1,2,Disajikan,Ala Carte,0
+"Cerenti Restaurant, Hotel Grand Zuri",Western,3.63 km,66000,4.6,Formal,Tidak,"Barat, Pizza & pasta, Aneka nasi, Chinese",Tidak,1,2,Disajikan,Ala Carte,2
+"Sushi Tei, Komplek Colombo",Japanese,3.76 km,100000,4.7,Formal,Tidak,"Beverages, Seafood, Japanese",Tidak,1,3,Disajikan,Ala Carte,1
+"Bubur Ayam Kampung Hawila, Timoho",Chinese,1.94 km,25000,4.5,Santai,Tidak,"Cepat saji, Chinese, Aneka nasi",Tidak,4,3,Disajikan,Ala Carte,0
+"Nasi Ayam d' Katsu, Rejodadi Sidorejo",Japanese,5.95 km,38000,4.7,Santai,Tidak,"Chicken & duck, Japanese, Rice",Tidak,1,3,Disajikan,Ala Carte,2
+Kedai Liang Xin,Chinese,4.62 km,22000,4.7,Santai,Tidak,"Chinese, Japanese",Tidak,1,2,Disajikan,Ala Carte,0
+"My Kopi-O! Indonesian Bistro, Sagan",Western,3.76 km,51000,4.8,Santai,Tidak,"Coffee, Snacks, Western",Tidak,4,3,Disajikan,Ala Carte,2
+"Gokana Ramen & Teppan, Pakuwon Mall Jogja",Japanese,6.03 km,55000,4.5,Formal,Tidak,"Japanese, Rice",Tidak,1,2,Disajikan,Ala Carte,2
+"Katsukai, Selokan Mataram",Japanese,5.19 km,37000,4.1,Santai,Tidak,"Japanese, Rice",Tidak,1,1,Disajikan,Ala Carte,0
+"Kalluna, Kotabaru",Western,3.39 km,60000,4.7,Santai,Tidak,"Rice, Chicken & duck, Western",Tidak,4,2,Disajikan,Ala Carte,2
+"Daruma Donburi, Mlati, Sinduadi",Japanese,5.75 km,35000,4.0,Santai,Ya,"Rice, Japanese",Tidak,3,1,Disajikan,Ala Carte,0
+"Sabi Jogja, Caturtunggal",Japanese,4.07 km,49000,4.5,Santai,Ya,"Sate, Rice, Japanese",Tidak,2,2,Disajikan,Ala Carte,2
+"Brick Pastrami Burger, Kuliner Lor Tugu",Western,4.07 km,44000,4.5,Santai,Tidak,Western,Tidak,2,3,Disajikan,Ala Carte,2
+"Burger Bros, Mergangsan",Western,1.2 km,40000,4.7,Santai,Tidak,Western,Tidak,3,1,Disajikan,Ala Carte,2
+"Lawang Resto, Yellow Star Ambarrukmo Hotel",Western,3.47 km,28000,3.9,Santai,Tidak,Western,Tidak,1,3,Disajikan,Ala Carte,0
+"Waroeng Steak and Shake, HOS Cokroaminoto",Western,4.24 km,40000,4.7,Santai,Tidak,Western,Tidak,2,3,Disajikan,Ala Carte,2
+"Kebab Turki Baba Rafi, Tegalrejo",Western,4.42 km,38000,4.0,Santai,Ya,"Western, Middle Eastern, Snacks",Tidak,1,2,Disajikan,Ala Carte,2
+"Madam Tan Indonesian Food, Gondokusuman",Western,4.4 km,30000,4.6,Santai,Tidak,"Western, Pizza & pasta, Noodles, Seafood",Tidak,2,2,Disajikan,Ala Carte,0
+"Yamie Panda, Jalan Solo",Chinese,3.53 km,28000,4.7,Santai,Ya,"Chinese, Bakmie",Ya,3,2,Disajikan,Ala Carte,0
+Soto Lamongan Cak Mangku,Indonesia,1.34 km,18000,4.6,Santai,Tidak,Bakso & soto,Tidak,1,1,Disajikan,Ala Carte,0
+"Soto Bu Kamto, Umbulharjo",Indonesia,0.93 km,15000,4.4,Santai,Tidak,"Bakso & soto, Aneka nasi, Ayam & bebek",Tidak,3,1,Disajikan,Ala Carte,0
+Bakso Ceker Mercon dan Penyetan Mayang Sidikan,Indonesia,0.78 km,18000,4.0,Santai,Ya,"Bakso & soto, Aneka nasi, Korea",Tidak,1,2,Disajikan,Ala Carte,0
+"Mie Ayam & Bakso Idolaku Pak Tikno, Tamansiswa",Indonesia,1.2 km,30000,4.7,Santai,Ya,"Bakso & soto, Bakmie",Tidak,1,2,Disajikan,Ala Carte,0
+"Soto Daging Sapi Lamongan Cak Sodik, Jl Veteran,umbuhalrjo",Indonesia,0.42 km,22000,4.4,Santai,Tidak,"Bakso & soto, Minuman, Cepat saji",Tidak,4,2,Disajikan,Ala Carte,0
+"YOSHINOYA BEEF BOWL, Kaliurang Jogja",Japanese,5.73 km,64000,4.8,Formal,Tidak,"Fast food, Japanese, Chicken & duck, Rice, Coffee",Tidak,1,2,Disajikan,Ala Carte,2
+"Melt Salad Fresh n Healthy Food, Sukun Raya",Western,3.04 km,19000,4.8,Santai,Tidak,"Fast food, Sweets, Western",Tidak,3,2,Disajikan,Ala Carte,0
+"Nasi Bakar Lagi Dan Mendoan Jumbo ""Mbakayune"", Umbulharjo",Indonesia,1.45 km,20000,4.7,Santai,Ya,"Jajanan, Aneka nasi, Bakso & soto",Tidak,4,2,Disajikan,Ala Carte,0
+"Oriyamie, Kusumanegara",Indonesia,1.26 km,20000,3.7,Santai,Ya,"Jajanan, Bakso & soto, Bakmie",Tidak,1,1,Disajikan,Ala Carte,0
+"Ichiban Sushi, Plaza Malioboro",Japanese,3.24 km,52000,4.6,Formal,Tidak,Japanese,Tidak,3,3,Disajikan,Ala Carte,2
+"Banzai, Tegalrejo",Japanese,5.03 km,49000,4.8,Formal,Tidak,"Japanese, Fast food, Rice",Tidak,1,1,Disajikan,Ala Carte,2
+"Nakdang, Banguntapan",Japanese,3.28 km,33000,4.6,Santai,Tidak,"Japanese, Rice, Chicken & duck",Tidak,4,2,Disajikan,Ala Carte,0
+"Boga Kitchen, Selokan Yogya",Japanese,5.11 km,82000,4.6,Santai,Ya,"Japanese, Rice, Fast food, Chicken & duck",Tidak,2,3,Disajikan,Ala Carte,2
+"Por Aqui Resto & IRD, Prawirotaman",Western,1.88 km,33000,4.6,Santai,Tidak,"Rice, Beverages, Western",Tidak,3,1,Disajikan,Ala Carte,0
+"Ayam Geprek Dan Katsu KALARASA, Umbulharjo",Japanese,1.02 km,18000,4.7,Santai,Ya,"Rice, Fast food, Japanese",Tidak,1,2,Disajikan,Ala Carte,0
+"Nasi Mangkok Uncle Dave, Depok/Caturtunggal/Seturan",Japanese,5.89 km,21000,4.6,Santai,Tidak,"Rice, Fast food, Japanese",Tidak,3,1,Disajikan,Ala Carte,0
+"Ramen Kanbai, Babarsari",Japanese,5.03 km,27000,4.3,Santai,Tidak,"Sweets, Japanese, Noodles",Tidak,2,3,Disajikan,Ala Carte,0
+"Boom Burger, Mergangsan",Western,1.2 km,37000,4.6,Santai,Tidak,Western,Tidak,2,3,Disajikan,Ala Carte,0
+"Burger Bros, Seturan",Western,4.56 km,40000,4.7,Santai,Tidak,Western,Tidak,2,1,Disajikan,Ala Carte,2
+"Monalisa Burger Sisingamangaraja, seberang BDS syariah",Western,1.77 km,33000,4.7,Santai,Tidak,Western,Tidak,3,3,Disajikan,Ala Carte,0
+"Choky Spaghetti Steak, Sugiyono",Western,1.93 km,24000,4.7,Santai,Tidak,"Western, Rice",Tidak,4,3,Disajikan,Ala Carte,0
+"Steak Box, Gondokusuman, Kotabaru",Western,3.64 km,27000,4.5,Santai,Tidak,"Western, Rice, Fast food",Tidak,2,2,Disajikan,Ala Carte,0
+"Ta Wan, Malioboro",Chinese,3.24 km,56000,4.7,Formal,Ya,"Aneka nasi, Ayam & bebek, Chinese",Ya,1,2,Disajikan,Ala Carte,2
+"Yamie Panda, Lippo Mall Jogja",Chinese,3.26 km,28000,4.6,Santai,Ya,"Bakmie, Chinese",Ya,4,1,Disajikan,Ala Carte,0
+"Yamie Panda, Tamansiswa",Chinese,1.18 km,28000,4.7,Santai,Ya,"Chinese, Bakmie",Ya,4,3,Disajikan,Ala Carte,0
+Pondok Damai Mbah Tin,Chinese,3.54 km,23000,4.5,Santai,Ya,"Aneka nasi, Bakmie, Chinese",Tidak,1,3,Disajikan,Ala Carte,0
+"Mie Ayam Pancoran, Glagahsari",Indonesia,0.51 km,21000,3.9,Santai,Tidak,"Bakmie, Bakso & soto",Tidak,1,3,Disajikan,Ala Carte,0
+"Mie Kita Orang, Pasar Kranggan Lantai 2",Chinese,4.14 km,20000,4.2,Santai,Tidak,"Bakmie, Chinese",Tidak,4,3,Disajikan,Ala Carte,0
+"Bakso Cak Masrur, Timoho",Indonesia,1.58 km,43000,4.6,Santai,Tidak,Bakso & soto,Tidak,2,2,Disajikan,Ala Carte,2
+Mie Ayam Dan Bakso Urat Sari Roso Wonogiri,Indonesia,0.25 km,17000,4.7,Santai,Ya,Bakso & soto,Tidak,4,2,Disajikan,Ala Carte,0
+Soto Daging Sapi Lamongan Cak Lim,Indonesia,0.39 km,22000,4.6,Santai,Tidak,"Bakso & soto, Cepat saji, Aneka nasi",Tidak,2,3,Disajikan,Ala Carte,0
+"Etnik Kafe, Mergangsan",Chinese,1.87 km,23000,4.3,Santai,Tidak,"Chinese, Aneka nasi, Ayam & bebek",Tidak,2,1,Disajikan,Ala Carte,0
+Bakso Bakar Sosis Bakar Depokan,Indonesia,1.15 km,22000,4.4,Santai,Tidak,"Jajanan, Bakso & soto, Bakmie",Tidak,4,1,Disajikan,Ala Carte,0
+"HokBen, Malioboro Mall",Japanese,3.25 km,49000,4.7,Formal,Tidak,Japanese,Tidak,3,3,Disajikan,Ala Carte,2
+Silla Korean & Japanese Restaurant,Japanese,6.13 km,85000,4.8,Formal,Tidak,"Japanese, Korean",Tidak,2,1,Disajikan,Ala Carte,2
+"Aqori Angkringan Jepang, Kuliner Lor Tugu",Japanese,4.08 km,23000,4.4,Santai,Tidak,"Japanese, Snacks",Tidak,1,3,Disajikan,Ala Carte,0
+Bakso Urat dan Mie Ayam Krowal Krowel,Indonesia,1.38 km,15000,3.5,Santai,Tidak,"Minuman, Bakso & soto, Bakmie",Tidak,1,3,Disajikan,Ala Carte,0
+Bubur Ayam Bang Opik,Chinese,1.52 km,18000,4.5,Santai,Tidak,"Minuman, Cepat saji, Chinese",Tidak,3,1,Disajikan,Ala Carte,0
+"Sun Rice Bowl, Panggungharjo",Japanese,4.95 km,28000,4.7,Santai,Tidak,"Rice, Chicken & duck, Japanese",Tidak,3,2,Disajikan,Ala Carte,0
+"Sate Kambing Pak Tomek, Ngentak",Indonesia,3.06 km,22000,4.5,Santai,Tidak,"Sate, Aneka nasi, Bakso & soto",Tidak,3,3,Disajikan,Ala Carte,0
+"Seafood 99, Sorogenen",Chinese,1.4 km,32000,4.7,Santai,Tidak,"Seafood, Aneka nasi, Chinese",Tidak,4,1,Disajikan,Ala Carte,0
+"Lawson Shop, Imogiri Barat",Japanese,5.49 km,44000,4.7,Formal,Tidak,"Snacks, Beverages, Japanese, Coffee, Korean",Tidak,4,3,Disajikan,Ala Carte,2
+"Lawson Shop, Sorowajan",Japanese,2.75 km,44000,4.7,Formal,Tidak,"Snacks, Beverages, Japanese, Coffee, Korean",Tidak,4,2,Disajikan,Ala Carte,2
+"Burgerax, Gedongkuning",Western,1.64 km,38000,4.5,Santai,Tidak,"Snacks, Fast food, Western",Tidak,1,2,Disajikan,Ala Carte,2
+"Hawker's Steak, JEC",Western,2.41 km,28000,4.5,Formal,Tidak,Western,Tidak,2,1,Disajikan,Ala Carte,0
+"Pizza Aroma Italia 2, Gondokusuman",Western,2.37 km,107000,4.8,Formal,Tidak,"Western, Pizza & pasta",Tidak,2,2,Disajikan,Ala Carte,1
+"Blengerr, Hayam Wuruk",Chinese,2.73 km,34000,4.7,Santai,Ya,"Aneka nasi, Ayam & bebek, Chinese",Tidak,4,3,Disajikan,Ala Carte,0
+"Nasi Goreng dan Chinese Food Abah, Prawirotaman",Chinese,2.11 km,22000,4.8,Santai,Tidak,"Bakmie, Chinese, Aneka nasi",Tidak,1,1,Disajikan,Ala Carte,0
+Bakso Rahayu,Indonesia,1.47 km,14000,4.5,Santai,Tidak,Bakso & soto,Tidak,1,1,Disajikan,Ala Carte,0
+BAKSO URAT CAK EKA AREMA MALANG JATIM,Indonesia,3.01 km,16000,4.4,Santai,Tidak,Bakso & soto,Tidak,4,3,Disajikan,Ala Carte,0
+"Soto Sapi Winong, Ngeksigondo",Indonesia,1.13 km,25000,4.9,Santai,Tidak,Bakso & soto,Tidak,4,2,Disajikan,Ala Carte,0
+"Mr. Teto Sate & Soto, Perintis Kemerdekaan",Indonesia,0.85 km,27000,4.8,Santai,Tidak,"Bakso & soto, Sate",Tidak,2,1,Disajikan,Ala Carte,0
+"Steak 36 Kusumanegara, No.222 , Kota Yogyakarta",Western,1.51 km,24000,4.5,Santai,Tidak,"Chicken & duck, Western",Tidak,3,3,Disajikan,Ala Carte,0
+"Petit Paris Boulangerie and Bistro, Kotabaru",Western,3.22 km,103000,4.5,Formal,Tidak,"Chicken & duck, Western, Fast food",Tidak,3,2,Disajikan,Ala Carte,1
+"A&M Co. Express, Jogja",Japanese,3.95 km,75000,4.6,Formal,Tidak,"Fast food, Japanese",Tidak,4,1,Disajikan,Ala Carte,2
+"Ayam Serundeng, Nitikan",Indonesia,1 km,21000,4.6,Santai,Tidak,"Jajanan, Aneka nasi, Bakso & soto",Tidak,3,3,Disajikan,Ala Carte,0
+"Hakata Ikkousha, Hartono Mall",Japanese,6.19 km,64000,4.6,Formal,Tidak,Japanese,Tidak,4,3,Disajikan,Ala Carte,2
+"Shigeru Sushi, Pakuwon Mall Yogyakarta",Japanese,6.1 km,50000,4.5,Formal,Ya,Japanese,Tidak,1,1,Disajikan,Ala Carte,2
+"Kimukatsu, Hartono Mall",Japanese,5.94 km,67000,4.8,Formal,Tidak,"Japanese, Rice, Chicken & duck",Tidak,3,3,Disajikan,Ala Carte,2
+"Beef Mafia, Selokan Yogya",Japanese,5.11 km,70000,4.8,Formal,Ya,"Japanese, Rice, Fast food, Chicken & duck",Tidak,4,1,Disajikan,Ala Carte,2
+"Genki Sushi, Plaza Ambarrukmo",Japanese,3.74 km,58000,4.7,Formal,Tidak,"Japanese, Rice, Snacks",Tidak,1,2,Disajikan,Ala Carte,2
+"K'Meals Bar & Restaurant, Prawirotaman",Western,2.02 km,40000,4.8,Formal,Tidak,"Pizza & pasta, Beverages, Western",Tidak,2,1,Disajikan,Ala Carte,2
+"Ganbate Kitchen, Widya Mataram",Japanese,3.3 km,31000,4.4,Santai,Tidak,"Rice, Chicken & duck, Japanese",Tidak,4,2,Disajikan,Ala Carte,0
+"AB Oriental Streetfood, Pedak",Japanese,3.14 km,32000,4.7,Santai,Ya,"Rice, Fast food, Japanese",Tidak,2,2,Disajikan,Ala Carte,0
+"Steak Moen-Moen, Galeria Mall",Western,3.47 km,26000,4.4,Formal,Tidak,Western,Tidak,4,3,Disajikan,Ala Carte,0
+"Steak Up, Mlati",Western,4.13 km,88000,4.6,Santai,Tidak,Western,Tidak,2,1,Disajikan,Ala Carte,1
+"Kebab Burger 26, Kotagede",Western,1.8 km,19000,4.3,Santai,Tidak,"Western, Fast food",Tidak,3,2,Disajikan,Ala Carte,0
+"Pothz Burger, STM Pembangunan",Western,4.48 km,27000,4.6,Santai,Tidak,"Western, Fast food",Tidak,3,1,Disajikan,Ala Carte,0
+Warung Buto,Chinese,2.2 km,43000,4.7,Santai,Tidak,"Aneka nasi, Chinese, Sate",Tidak,1,1,Disajikan,Ala Carte,2
+"Mie Surabaya Pak Joko, Gedongkuning Selatan",Chinese,1.62 km,18000,4.7,Santai,Tidak,"Bakmie, Aneka nasi, Chinese",Tidak,4,3,Disajikan,Ala Carte,0
+Bakso Dan Mie Ayam Barokah 354 Sor Talok,Indonesia,0.75 km,16000,4.6,Santai,Tidak,"Bakmie, Bakso & soto",Tidak,2,1,Disajikan,Ala Carte,0
+"Mie Kepang Jayakarta, Kusumanegara",Indonesia,1.26 km,42000,4.6,Santai,Ya,"Bakmie, Jajanan, Bakso & soto",Tidak,3,2,Disajikan,Ala Carte,2
+Warung Sop dan Tongseng Ayam Family,Indonesia,3.1 km,17000,4.2,Santai,Tidak,"Bakso & soto, Ayam & bebek",Tidak,2,3,Disajikan,Ala Carte,0
+"Ono Dimsum, Timoho",Indonesia,2.84 km,17000,4.6,Santai,Tidak,"Bakso & soto, Cepat saji, Jajanan",Tidak,4,1,Disajikan,Ala Carte,0
+Bakso Dan Seblak Asgar,Indonesia,0.51 km,17000,4.6,Santai,Ya,"Bakso & soto, Cepat saji, Minuman",Tidak,3,1,Disajikan,Ala Carte,0
+"Tanamera Coffee Roastery, Yogyakarta",Western,4.03 km,75000,4.5,Santai,Tidak,"Beverages, Coffee, Western",Tidak,3,1,Disajikan,Ala Carte,2
+"Rembo Chick n Steak, Mantrijeron",Western,3.66 km,15000,3.4,Santai,Tidak,"Chicken & duck, Western, Fast food",Tidak,2,1,Disajikan,Ala Carte,0
+"Oase Cafe & Coffe, Mergangsan",Chinese,1.3 km,22000,4.6,Santai,Tidak,"Chinese, Aneka nasi, Bakmie",Tidak,2,2,Disajikan,Ala Carte,0
+Rumah Makan Echo Roso 1,Chinese,3.06 km,27000,4.6,Santai,Tidak,"Chinese, Aneka nasi, Seafood",Tidak,3,2,Disajikan,Ala Carte,0
+"Vegan Fortunate Coffee, Jogonegaran",Western,3.57 km,45000,4.8,Santai,Ya,"Coffee, Western, Beverages",Tidak,4,3,Disajikan,Ala Carte,2
+"Onoki Mentai, Depok",Japanese,4.97 km,45000,4.8,Santai,Tidak,"Fast food, Japanese, Rice",Tidak,2,3,Disajikan,Ala Carte,2
+"Banzai!, Seturan",Japanese,4.56 km,49000,4.7,Formal,Tidak,Japanese,Tidak,3,1,Disajikan,Ala Carte,2
+"Ichiban Sushi, Plaza Ambarrukmo",Japanese,3.73 km,52000,4.6,Formal,Tidak,Japanese,Tidak,4,3,Disajikan,Ala Carte,2
+Umami House Sushi & Dry Ramen,Japanese,2.74 km,21000,4.5,Santai,Ya,Japanese,Tidak,4,3,Disajikan,Ala Carte,0
+"Zutto Sushi Homemade, Elang",Japanese,4.71 km,30000,4.4,Santai,Tidak,Japanese,Tidak,2,1,Disajikan,Ala Carte,0
+"Marugame Udon & Tempura, Plaza Ambarrukmo",Japanese,3.64 km,68000,4.8,Formal,Tidak,"Japanese, Noodles",Tidak,4,3,Disajikan,Ala Carte,2
+"Warunk Sushi Condong Catur, Depok",Japanese,4.98 km,44000,4.6,Santai,Ya,"Rice, Fast food, Japanese",Tidak,1,2,Disajikan,Ala Carte,2
+Takoyaki Kuliner Lor Tugu,Japanese,4.06 km,22000,4.2,Santai,Tidak,"Snacks, Beverages, Japanese",Tidak,3,2,Disajikan,Ala Carte,0
+"Lawson Shop, Mantrijeron",Japanese,3.61 km,44000,4.4,Formal,Tidak,"Snacks, Beverages, Japanese, Coffee, Korean",Tidak,1,3,Disajikan,Ala Carte,2
+"Veno'S Burger, Mergangsan",Western,2.22 km,40000,4.1,Santai,Ya,"Snacks, Fast food, Western",Tidak,3,1,Disajikan,Ala Carte,2
+OMAH STEAK AND CHICKEN,Western,2.31 km,34000,4.7,Santai,Tidak,Western,Tidak,3,2,Disajikan,Ala Carte,0
+"Pondok Cabe Bistro, C Simanjuntak",Western,4.25 km,35000,4.5,Santai,Tidak,"Western, Pizza & pasta, Rice, Chicken & duck, Bakso & soto",Tidak,4,3,Disajikan,Ala Carte,0
+Waroeng Spaghetti Balapan,Western,3.25 km,25000,4.7,Santai,Ya,"Western, Snacks",Tidak,2,2,Disajikan,Ala Carte,0
+"Burgerax, Patangpuluhan",Western,4.59 km,38000,4.7,Santai,Tidak,"Western, Snacks, Fast food",Tidak,4,3,Disajikan,Ala Carte,2
+"Shaburi & Kintan Buffet, Ambarukmo Plaza Yogya",Japanese,3.67 km,330000,4.8,Formal,Tidak,"Japanese, Rice, Chicken & duck",Tidak,1,2,Ambil Sendiri,All You Can Eat,1
