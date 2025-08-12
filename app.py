@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import os
 
@@ -20,15 +22,19 @@ CSV_COL_PRICE   = "Harga Rata-Rata Makanan di Toko (Rp)"
 CSV_COL_RATING  = "Rating Toko"
 CSV_COL_NAME    = "Nama Restoran"
 CSV_COL_PREF    = "Preferensi Makanan"
-CSV_COL_CLUSTER = "cluster_kmeans"
+CSV_COL_CLUSTER = "cluster_kmeans"  # akan dibuat/ditimpa
 
 # ===== load data =====
 csv_path = os.path.join(BASE_DIR, "data_with_cluster.csv")
 df = pd.read_csv(csv_path)
 
-# batas slider global (aman untuk NaN/string)
-_prices_num  = pd.to_numeric(df[CSV_COL_PRICE],  errors="coerce")
-_ratings_num = pd.to_numeric(df[CSV_COL_RATING], errors="coerce")
+# ---- kolom numerik aman ----
+df["_price_num"]  = pd.to_numeric(df[CSV_COL_PRICE],  errors="coerce")
+df["_rating_num"] = pd.to_numeric(df[CSV_COL_RATING], errors="coerce")
+
+# batas slider (pakai nilai non-NaN)
+_prices_num  = df["_price_num"].dropna()
+_ratings_num = df["_rating_num"].dropna()
 HMIN, HMAX = int(_prices_num.min()),  int(_prices_num.max())
 RMIN, RMAX = float(_ratings_num.min()), float(_ratings_num.max())
 
@@ -40,20 +46,37 @@ for s in df[CSV_COL_PREF].dropna():
 JENIS_LIST = sorted(_all_jenis)
 
 # ===== Kategori harga per RESTORAN (bukan per cluster) =====
-_prices_clean = _prices_num.dropna()
-q1, q2 = _prices_clean.quantile([0.33, 0.66])  # batas otomatis hemat/menengah/premium
+_prices_clean = _prices_num
+q1, q2 = _prices_clean.quantile([0.33, 0.66])  # hemat/menengah/premium
 
 def _tier_name(v):
+    if pd.isna(v):  # aman untuk NaN
+        return None
     if v <= q1:  return "Hemat"
     if v <= q2:  return "Menengah"
     return "Premium"
 
-# kolom kategori per baris
-df["tier_label"] = _prices_num.apply(_tier_name)
-
-# opsi dropdown selalu 3 nilai
+df["tier_label"] = df["_price_num"].apply(_tier_name)
 tier_options = ["Hemat", "Menengah", "Premium"]
-# ================================================
+
+# ===== KMeans training (pakai harga & rating) =====
+mask_train = df["_price_num"].notna() & df["_rating_num"].notna()
+X = df.loc[mask_train, ["_price_num", "_rating_num"]].to_numpy()
+
+if len(X) >= 3:  # minimal masuk akal untuk 3 cluster
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+
+    kmeans = KMeans(n_clusters=3, init="k-means++", max_iter=300, n_init=10, random_state=0)
+    labels = kmeans.fit_predict(X_scaled)
+
+    # tulis hasil ke kolom cluster_kmeans (nullable Int64)
+    df[CSV_COL_CLUSTER] = pd.NA
+    df.loc[mask_train, CSV_COL_CLUSTER] = labels
+    df[CSV_COL_CLUSTER] = df[CSV_COL_CLUSTER].astype("Int64")
+else:
+    # data terlalu sedikit / tidak valid -> tetap buat kolom agar tidak error saat filter
+    df[CSV_COL_CLUSTER] = pd.Series([pd.NA] * len(df), dtype="Int64")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -93,8 +116,8 @@ def index():
     # filter berdasar kategori harga per RESTORAN
     if cluster_label:
         hasil = hasil[hasil["tier_label"] == cluster_label]
-    # filter lama berdasar ID cluster (optional)
-    elif cluster_id_val.isdigit():
+    # filter lama berdasar ID cluster (optional) — hanya jika kolom ada & digit
+    elif cluster_id_val.isdigit() and CSV_COL_CLUSTER in hasil.columns:
         hasil = hasil[hasil[CSV_COL_CLUSTER] == int(cluster_id_val)]
 
     return render_template(
