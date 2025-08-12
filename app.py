@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import silhouette_score, davies_bouldin_score
 import pandas as pd
 import os
 
@@ -35,8 +36,8 @@ df["_rating_num"] = pd.to_numeric(df[CSV_COL_RATING], errors="coerce")
 # batas slider (pakai nilai non-NaN)
 _prices_num  = df["_price_num"].dropna()
 _ratings_num = df["_rating_num"].dropna()
-HMIN, HMAX = int(_prices_num.min()),  int(_prices_num.max())
-RMIN, RMAX = float(_ratings_num.min()), float(_ratings_num.max())
+HMIN, HMAX = (int(_prices_num.min()), int(_prices_num.max())) if len(_prices_num) else (0, 0)
+RMIN, RMAX = (float(_ratings_num.min()), float(_ratings_num.max())) if len(_ratings_num) else (0.0, 5.0)
 
 # list jenis (sekali hitung)
 _all_jenis = set()
@@ -46,8 +47,11 @@ for s in df[CSV_COL_PREF].dropna():
 JENIS_LIST = sorted(_all_jenis)
 
 # ===== Kategori harga per RESTORAN (bukan per cluster) =====
-_prices_clean = _prices_num
-q1, q2 = _prices_clean.quantile([0.33, 0.66])  # hemat/menengah/premium
+if len(_prices_num) >= 3:
+    q1, q2 = _prices_num.quantile([0.33, 0.66])
+else:
+    q1 = _prices_num.min() if len(_prices_num) else 0
+    q2 = _prices_num.max() if len(_prices_num) else 0
 
 def _tier_name(v):
     if pd.isna(v):  # aman untuk NaN
@@ -59,11 +63,28 @@ def _tier_name(v):
 df["tier_label"] = df["_price_num"].apply(_tier_name)
 tier_options = ["Hemat", "Menengah", "Premium"]
 
-# ===== KMeans training (pakai harga & rating) =====
-mask_train = df["_price_num"].notna() & df["_rating_num"].notna()
-X = df.loc[mask_train, ["_price_num", "_rating_num"]].to_numpy()
+# ===== Status training & metrik (global sederhana) =====
+TRAINED = False
+METRICS = {"silhouette": None, "dbi": None, "n": 0}
 
-if len(X) >= 3:  # minimal masuk akal untuk 3 cluster
+# Pastikan kolom cluster ada & kosong (SEBELUM training)
+df[CSV_COL_CLUSTER] = pd.Series([pd.NA] * len(df), dtype="Int64")
+
+def train_kmeans():
+    """Latih KMeans pada kolom harga & rating, isi cluster_kmeans + hitung metrik."""
+    global TRAINED, METRICS, df
+
+    mask_train = df["_price_num"].notna() & df["_rating_num"].notna()
+    X = df.loc[mask_train, ["_price_num", "_rating_num"]].to_numpy()
+
+    # Guard data minimal
+    if len(X) < 3:
+        TRAINED = False
+        METRICS = {"silhouette": None, "dbi": None, "n": int(len(X))}
+        # kosongkan cluster
+        df[CSV_COL_CLUSTER] = pd.Series([pd.NA] * len(df), dtype="Int64")
+        return
+
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
@@ -74,11 +95,18 @@ if len(X) >= 3:  # minimal masuk akal untuk 3 cluster
     df[CSV_COL_CLUSTER] = pd.NA
     df.loc[mask_train, CSV_COL_CLUSTER] = labels
     df[CSV_COL_CLUSTER] = df[CSV_COL_CLUSTER].astype("Int64")
-else:
-    # data terlalu sedikit / tidak valid -> tetap buat kolom agar tidak error saat filter
-    df[CSV_COL_CLUSTER] = pd.Series([pd.NA] * len(df), dtype="Int64")
 
-@app.route("/", methods=["GET", "POST"])
+    # hitung metrik (butuh >=2 cluster & sampel > jumlah cluster)
+    unique_clusters = pd.Series(labels).nunique()
+    sil, dbi = None, None
+    if unique_clusters >= 2 and len(X_scaled) > unique_clusters:
+        sil = float(silhouette_score(X_scaled, labels))
+        dbi = float(davies_bouldin_score(X_scaled, labels))
+
+    METRICS = {"silhouette": sil, "dbi": dbi, "n": int(len(X))}
+    TRAINED = True
+
+@app.route("/", methods=["GET"])
 def index():
     # ambil input
     nama       = (request.values.get("nama") or "").strip().lower()
@@ -120,9 +148,17 @@ def index():
     elif cluster_id_val.isdigit() and CSV_COL_CLUSTER in hasil.columns:
         hasil = hasil[hasil[CSV_COL_CLUSTER] == int(cluster_id_val)]
 
+    # ===== Batasi 10 baris =====
+    total_count = int(len(hasil))
+    hasil_view = hasil.head(10)
+
     return render_template(
         "index.html",
-        hasil=hasil.to_dict("records"),
+        hasil=hasil_view.to_dict("records"),
+        total_count=total_count,
+        limit=10,
+        trained=TRAINED,
+        metrics=METRICS,
         jenis_list=JENIS_LIST,
 
         # dropdown kategori (label unik)
@@ -138,9 +174,22 @@ def index():
         request=request,
     )
 
+@app.post("/train")
+def train():
+    train_kmeans()
+    return redirect(url_for("index"))
+
+@app.post("/reset")
+def reset():
+    global TRAINED, METRICS, df
+    df[CSV_COL_CLUSTER] = pd.Series([pd.NA] * len(df), dtype="Int64")
+    TRAINED = False
+    METRICS = {"silhouette": None, "dbi": None, "n": 0}
+    return redirect(url_for("index"))
+
 @app.get("/health")
 def health():
-    return {"ok": True, "rows": int(len(df))}
+    return {"ok": True, "rows": int(len(df)), "trained": TRAINED, "metrics": METRICS}
 
 if __name__ == "__main__":
     app.run(debug=True)

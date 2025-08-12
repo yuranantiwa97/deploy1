@@ -20,6 +20,65 @@
   </nav>
 
   <div class="container pb-4">
+    <!-- ==== Panel Training & Evaluasi ==== -->
+    <div class="card shadow-sm p-3 mb-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div>
+          <span class="me-2">Status:</span>
+          {% if trained %}
+            <span class="badge text-bg-success">Sudah Dilatih</span>
+          {% else %}
+            <span class="badge text-bg-secondary">Belum Dilatih (Sebelum Training)</span>
+          {% endif %}
+        </div>
+
+        <div class="d-flex gap-2">
+          <form method="POST" action="/train">
+            <button type="submit" class="btn btn-outline-primary">Train KMeans</button>
+          </form>
+          <form method="POST" action="/reset">
+            <button type="submit" class="btn btn-outline-secondary">Reset (Sebelum Training)</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Metrik evaluasi -->
+      <div class="mt-3">
+        <h6 class="mb-2">Evaluasi (setelah training)</h6>
+        {% if trained and metrics and (metrics.silhouette is not none or metrics.dbi is not none) %}
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div class="p-2 border rounded bg-white">
+                <div class="small text-muted">Silhouette Score</div>
+                <div class="fs-5 fw-semibold">
+                  {{ "%.3f"|format(metrics.silhouette) if metrics.silhouette is not none else "n/a" }}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-2 border rounded bg-white">
+                <div class="small text-muted">Davies-Bouldin Index</div>
+                <div class="fs-5 fw-semibold">
+                  {{ "%.3f"|format(metrics.dbi) if metrics.dbi is not none else "n/a" }}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="p-2 border rounded bg-white">
+                <div class="small text-muted">Sampel Dilatih</div>
+                <div class="fs-5 fw-semibold">{{ metrics.n }}</div>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="alert alert-info mb-0">
+            Belum ada metrik. Klik <b>Train KMeans</b> untuk melatih dan menampilkan Silhouette & DBI.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- ==== Filter ==== -->
     <div class="card shadow-sm p-4 mb-4">
       <h5 class="mb-3">Filter Rekomendasi</h5>
 
@@ -88,7 +147,10 @@
     </div>
 
     {% if hasil is defined %}
-      <h5>Hasil Rekomendasi ({{ hasil|length }})</h5>
+      <h5 class="mb-2">
+        Hasil Rekomendasi ({{ total_count }}) — menampilkan {{ limit }} pertama
+        {% if trained %}<span class="badge text-bg-success ms-2">Setelah Training</span>{% else %}<span class="badge text-bg-secondary ms-2">Sebelum Training</span>{% endif %}
+      </h5>
 
       {% if hasil %}
       <div class="table-responsive mb-5">
@@ -101,6 +163,9 @@
               <th>Harga (Rp)</th>
               <th>Rating</th>
               <th>Kategori</th>
+              {% if trained %}
+                <th>Cluster (KMeans)</th>
+              {% endif %}
             </tr>
           </thead>
           <tbody>
@@ -117,6 +182,15 @@
                 <span class="ms-1 small">({{ rating_val }})</span>
               </td>
               <td>{{ row['tier_label'] }}</td>
+              {% if trained %}
+                <td>
+                  {% if row['cluster_kmeans'] is not none %}
+                    {{ row['cluster_kmeans'] }}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+              {% endif %}
             </tr>
             {% endfor %}
           </tbody>
