@@ -7,9 +7,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     body { background-color: #f5f6fa; }
-    .container { max-width: 900px; }
+    .container { max-width: 1000px; }
     .rating-star { color: #ffc107; }
     .filter-label { font-weight: 500; margin-bottom: 2px; }
+    .mono { font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
   </style>
 </head>
 <body>
@@ -20,127 +21,208 @@
   </nav>
 
   <div class="container pb-4">
+
     <!-- ==== Panel Training & Evaluasi ==== -->
     <div class="card shadow-sm p-3 mb-4">
       <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-        <div>
-          <span class="me-2">Status:</span>
+        <div class="d-flex align-items-center gap-2">
+          <span>Status:</span>
           {% if trained %}
-            <span class="badge text-bg-success">Sudah Dilatih</span>
+            <span class="badge text-bg-success">Setelah Training (subset filter saat ini)</span>
           {% else %}
-            <span class="badge text-bg-secondary">Belum Dilatih (Sebelum Training)</span>
+            <span class="badge text-bg-secondary">Sebelum Training</span>
           {% endif %}
+          <span class="ms-3">Algoritma:</span>
+          <span class="badge text-bg-info text-dark">
+            {{ 'K-Means' if algo=='kmeans' else 'MeanShift' }}
+            {% if algo=='kmeans' and (metrics.k_mode or k) %}
+              (k={{ metrics.best_k or k }}{{ ', Auto' if metrics.k_mode=='auto' else '' }})
+            {% endif %}
+          </span>
         </div>
 
-        <div class="d-flex gap-2">
-          <form method="POST" action="/train">
-            <button type="submit" class="btn btn-outline-primary">Train KMeans</button>
+        <div class="d-flex flex-wrap gap-2">
+          <!-- Train: kirim filter + pengaturan -->
+          <form method="POST" action="/train" class="d-inline">
+            <input type="hidden" name="nama"        value="{{ request.values.get('nama','') }}">
+            <input type="hidden" name="jenis"       value="{{ request.values.get('jenis','') }}">
+            <input type="hidden" name="harga_min"   value="{{ harga_min_req }}">
+            <input type="hidden" name="harga_max"   value="{{ harga_max_req }}">
+            <input type="hidden" name="rating_min"  value="{{ rating_min_req }}">
+            <input type="hidden" name="rating_max"  value="{{ rating_max_req }}">
+            <input type="hidden" name="cluster_label" value="{{ selected_cluster_label }}">
+            <input type="hidden" name="algo"  value="{{ algo }}">
+            <input type="hidden" name="k"     value="{{ k }}">
+            <input type="hidden" name="k_auto" value="{{ '1' if k_auto else '' }}">
+            <button type="submit" class="btn btn-outline-primary">Train (pakai filter ini)</button>
           </form>
-          <form method="POST" action="/reset">
-            <button type="submit" class="btn btn-outline-secondary">Reset (Sebelum Training)</button>
+
+          <!-- Reset -->
+          <form method="POST" action="/reset" class="d-inline">
+            <input type="hidden" name="nama"        value="{{ request.values.get('nama','') }}">
+            <input type="hidden" name="jenis"       value="{{ request.values.get('jenis','') }}">
+            <input type="hidden" name="harga_min"   value="{{ harga_min_req }}">
+            <input type="hidden" name="harga_max"   value="{{ harga_max_req }}">
+            <input type="hidden" name="rating_min"  value="{{ rating_min_req }}">
+            <input type="hidden" name="rating_max"  value="{{ rating_max_req }}">
+            <input type="hidden" name="cluster_label" value="{{ selected_cluster_label }}">
+            <input type="hidden" name="algo"  value="{{ algo }}">
+            <input type="hidden" name="k"     value="{{ k }}">
+            <input type="hidden" name="k_auto" value="{{ '1' if k_auto else '' }}">
+            <button type="submit" class="btn btn-outline-secondary">Reset</button>
           </form>
         </div>
       </div>
 
-      <!-- Metrik evaluasi -->
-      <div class="mt-3">
-        <h6 class="mb-2">Evaluasi (setelah training)</h6>
-        {% if trained and metrics and (metrics.silhouette is not none or metrics.dbi is not none) %}
-          <div class="row g-3">
-            <div class="col-md-4">
-              <div class="p-2 border rounded bg-white">
-                <div class="small text-muted">Silhouette Score</div>
-                <div class="fs-5 fw-semibold">
-                  {{ "%.3f"|format(metrics.silhouette) if metrics.silhouette is not none else "n/a" }}
-                </div>
-              </div>
+      <!-- Metrik evaluasi + label kualitas -->
+      <div class="row g-3 mt-2">
+        <div class="col-md-4">
+          <div class="p-2 border rounded bg-white">
+            <div class="small text-muted">Silhouette Score</div>
+            <div class="fs-5 fw-semibold mono">
+              {% if metrics.silhouette is not none %}{{ '%.3f'|format(metrics.silhouette) }}{% else %}n/a{% endif %}
             </div>
-            <div class="col-md-4">
-              <div class="p-2 border rounded bg-white">
-                <div class="small text-muted">Davies-Bouldin Index</div>
-                <div class="fs-5 fw-semibold">
-                  {{ "%.3f"|format(metrics.dbi) if metrics.dbi is not none else "n/a" }}
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="p-2 border rounded bg-white">
-                <div class="small text-muted">Sampel Dilatih</div>
-                <div class="fs-5 fw-semibold">{{ metrics.n }}</div>
-              </div>
-            </div>
+            {% if metrics.sil_quality %}
+              <span class="badge text-bg-{{ metrics.sil_badge }} mt-1">{{ metrics.sil_quality }}</span>
+            {% endif %}
           </div>
-        {% else %}
-          <div class="alert alert-info mb-0">
-            Belum ada metrik. Klik <b>Train KMeans</b> untuk melatih dan menampilkan Silhouette & DBI.
+        </div>
+        <div class="col-md-4">
+          <div class="p-2 border rounded bg-white">
+            <div class="small text-muted">Davies-Bouldin Index</div>
+            <div class="fs-5 fw-semibold mono">
+              {% if metrics.dbi is not none %}{{ '%.3f'|format(metrics.dbi) }}{% else %}n/a{% endif %}
+            </div>
+            {% if metrics.dbi_quality %}
+              <span class="badge text-bg-{{ metrics.dbi_badge }} mt-1">{{ metrics.dbi_quality }}</span>
+            {% endif %}
           </div>
-        {% endif %}
+        </div>
+        <div class="col-md-4">
+          <div class="p-2 border rounded bg-white">
+            <div class="small text-muted">Sampel Dilatih</div>
+            <div class="fs-5 fw-semibold mono">{{ metrics.n or 0 }}</div>
+          </div>
+        </div>
       </div>
+
+      {% if trained and metrics.k_grid %}
+        <div class="mt-2">
+          <div class="small text-muted mb-1">Silhouette per k (2–6):</div>
+          <div class="d-flex flex-wrap gap-2">
+            {% for row in metrics.k_grid %}
+              <span class="badge text-bg-light border">
+                k={{ row.k }} → {{ row.silhouette is not none and ('%.3f'|format(row.silhouette)) or 'n/a' }}
+              </span>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if trained and metrics.profiles %}
+        <div class="mt-3">
+          <h6 class="mb-2">Profil Cluster (subset ini)</h6>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered align-middle">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama</th>
+                  <th>n</th>
+                  <th>Rata-rata Harga</th>
+                  <th>Rata-rata Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in metrics.profiles %}
+                <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ metrics.cluster_name_map[p.id] if metrics.cluster_name_map else '-' }}</td>
+                  <td>{{ p.n }}</td>
+                  <td>{{ p.mean_price | round(0) | int | rupiah }}</td>
+                  <td>{{ '%.2f'|format(p.mean_rating) }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="small text-muted">
+            Penamaan segmen ditentukan dari urutan rata-rata harga tiap cluster pada subset ini (rendah → tinggi).
+          </div>
+        </div>
+      {% endif %}
+
+      {% if trained and metrics.scatter_b64 %}
+        <div class="mt-3">
+          <h6 class="mb-2">Visualisasi (Harga vs Rating)</h6>
+          <img class="img-fluid rounded border" alt="scatter" src="data:image/png;base64, {{ metrics.scatter_b64 }}">
+        </div>
+      {% endif %}
     </div>
 
-    <!-- ==== Filter ==== -->
+    <!-- ==== Filter & Pengaturan ==== -->
     <div class="card shadow-sm p-4 mb-4">
-      <h5 class="mb-3">Filter Rekomendasi</h5>
+      <h5 class="mb-3">Filter & Pengaturan</h5>
 
       <form method="GET" action="/">
         <div class="row g-3">
-          <!-- Nama -->
           <div class="col-md-6">
             <label class="filter-label">Nama Restoran</label>
-            <input type="text" class="form-control" name="nama" placeholder="Cari nama restoran..."
-                   value="{{ request.values.get('nama','') }}" />
+            <input type="text" class="form-control" name="nama" placeholder="Cari nama restoran..." value="{{ request.values.get('nama','') }}" />
           </div>
 
-          <!-- Jenis -->
           <div class="col-md-6">
             <label class="filter-label">Jenis Makanan</label>
             <select class="form-select" name="jenis">
               <option value="">Semua Jenis</option>
               {% for jenis in jenis_list %}
-                <option value="{{ jenis }}" {{ 'selected' if request.values.get('jenis','')==jenis else '' }}>
-                  {{ jenis }}
-                </option>
+                <option value="{{ jenis }}" {{ 'selected' if request.values.get('jenis','')==jenis else '' }}>{{ jenis }}</option>
               {% endfor %}
             </select>
           </div>
 
-          <!-- Harga -->
           <div class="col-md-6">
             <label class="filter-label">Harga (Rp): <span id="harga-range"></span></label>
-            <input type="range" class="form-range" name="harga_min"
-                   min="{{ harga_min }}" max="{{ harga_max }}"
-                   value="{{ harga_min_req or harga_min }}" step="1000" id="rangeHargaMin" />
-            <input type="range" class="form-range" name="harga_max"
-                   min="{{ harga_min }}" max="{{ harga_max }}"
-                   value="{{ harga_max_req or harga_max }}" step="1000" id="rangeHargaMax" />
+            <input type="range" class="form-range" name="harga_min" min="{{ harga_min }}" max="{{ harga_max }}" value="{{ harga_min_req or harga_min }}" step="1000" id="rangeHargaMin" />
+            <input type="range" class="form-range" name="harga_max" min="{{ harga_min }}" max="{{ harga_max }}" value="{{ harga_max_req or harga_max }}" step="1000" id="rangeHargaMax" />
           </div>
 
-          <!-- Rating -->
           <div class="col-md-6">
             <label class="filter-label">Rating: <span id="rating-range"></span></label>
-            <input type="range" class="form-range" name="rating_min"
-                   min="{{ rating_min }}" max="{{ rating_max }}"
-                   value="{{ rating_min_req or rating_min }}" step="0.1" id="rangeRatingMin" />
-            <input type="range" class="form-range" name="rating_max"
-                   min="{{ rating_min }}" max="{{ rating_max }}"
-                   value="{{ rating_max_req or rating_max }}" step="0.1" id="rangeRatingMax" />
+            <input type="range" class="form-range" name="rating_min" min="{{ rating_min }}" max="{{ rating_max }}" value="{{ rating_min_req or rating_min }}" step="0.1" id="rangeRatingMin" />
+            <input type="range" class="form-range" name="rating_max" min="{{ rating_min }}" max="{{ rating_max }}" value="{{ rating_max_req or rating_max }}" step="0.1" id="rangeRatingMax" />
           </div>
 
-          <!-- Kategori (label unik) -->
-          <div class="col-md-12">
+          <div class="col-md-6">
             <label class="filter-label">Kategori rekomendasi (opsional)</label>
             <select class="form-select" name="cluster_label">
               <option value="">Semua kategori</option>
               {% for lab in tier_options %}
-                <option value="{{ lab }}" {{ 'selected' if lab == selected_cluster_label else '' }}>
-                  {{ lab }}
-                </option>
+                <option value="{{ lab }}" {{ 'selected' if lab == selected_cluster_label else '' }}>{{ lab }}</option>
               {% endfor %}
             </select>
           </div>
 
+          <div class="col-md-6">
+            <label class="filter-label">Algoritma</label>
+            <div class="input-group">
+              <select class="form-select" name="algo">
+                <option value="kmeans"    {{ 'selected' if algo=='kmeans' else '' }}>K-Means</option>
+                <option value="meanshift" {{ 'selected' if algo=='meanshift' else '' }}>MeanShift</option>
+              </select>
+              <input type="number" class="form-control" name="k" min="2" max="8" step="1"
+                     value="{{ k }}" {{ 'disabled' if algo!='kmeans' or k_auto else '' }} placeholder="k (K-Means)">
+              <span class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" name="k_auto" value="1"
+                       {{ 'checked' if k_auto else '' }} {{ 'disabled' if algo!='kmeans' else '' }}>
+                <span class="ms-2">Auto (2–6)</span>
+              </span>
+            </div>
+            <div class="form-text">K-Means: pilih k manual atau centang Auto (mencari k terbaik dari 2–6). MeanShift: jumlah cluster otomatis.</div>
+          </div>
+
           <div class="col-md-12 text-end mt-2">
-            <button type="submit" class="btn btn-primary">Tampilkan Rekomendasi</button>
+            <button type="submit" class="btn btn-primary">Terapkan</button>
           </div>
         </div>
       </form>
@@ -164,7 +246,7 @@
               <th>Rating</th>
               <th>Kategori</th>
               {% if trained %}
-                <th>Cluster (KMeans)</th>
+                <th>Cluster ({{ 'KMeans' if algo=='kmeans' else 'MeanShift' }})</th>
               {% endif %}
             </tr>
           </thead>
@@ -184,8 +266,9 @@
               <td>{{ row['tier_label'] }}</td>
               {% if trained %}
                 <td>
-                  {% if row['cluster_kmeans'] is not none %}
-                    {{ row['cluster_kmeans'] }}
+                  {% set cid = row['cluster_kmeans'] %}
+                  {% if cid is not none %}
+                    {{ cid }}
                   {% else %}
                     -
                   {% endif %}
