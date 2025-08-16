@@ -22,7 +22,75 @@
 
   <div class="container pb-4">
 
-    <!-- ==== Panel Training & Evaluasi ==== -->
+    <!-- ==== Filter & Pengaturan (DIPINDAH KE ATAS) ==== -->
+    <div class="card shadow-sm p-4 mb-4">
+      <h5 class="mb-3">Filter & Pengaturan</h5>
+
+      <form method="GET" action="/">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="filter-label">Nama Restoran</label>
+            <input type="text" class="form-control" name="nama" placeholder="Cari nama restoran..." value="{{ request.values.get('nama','') }}" />
+          </div>
+
+          <div class="col-md-6">
+            <label class="filter-label">Jenis Makanan</label>
+            <select class="form-select" name="jenis">
+              <option value="">Semua Jenis</option>
+              {% for jenis in jenis_list %}
+                <option value="{{ jenis }}" {{ 'selected' if request.values.get('jenis','')==jenis else '' }}>{{ jenis }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label class="filter-label">Harga (Rp): <span id="harga-range"></span></label>
+            <input type="range" class="form-range" name="harga_min" min="{{ harga_min }}" max="{{ harga_max }}" value="{{ harga_min_req or harga_min }}" step="1000" id="rangeHargaMin" />
+            <input type="range" class="form-range" name="harga_max" min="{{ harga_min }}" max="{{ harga_max }}" value="{{ harga_max_req or harga_max }}" step="1000" id="rangeHargaMax" />
+          </div>
+
+          <div class="col-md-6">
+            <label class="filter-label">Rating: <span id="rating-range"></span></label>
+            <input type="range" class="form-range" name="rating_min" min="{{ rating_min }}" max="{{ rating_max }}" value="{{ rating_min_req or rating_min }}" step="0.1" id="rangeRatingMin" />
+            <input type="range" class="form-range" name="rating_max" min="{{ rating_min }}" max="{{ rating_max }}" value="{{ rating_max_req or rating_max }}" step="0.1" id="rangeRatingMax" />
+          </div>
+
+          <div class="col-md-6">
+            <label class="filter-label">Kategori rekomendasi (opsional)</label>
+            <select class="form-select" name="cluster_label">
+              <option value="">Semua kategori</option>
+              {% for lab in tier_options %}
+                <option value="{{ lab }}" {{ 'selected' if lab == selected_cluster_label else '' }}>{{ lab }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label class="filter-label">Algoritma</label>
+            <div class="input-group">
+              <select class="form-select" name="algo">
+                <option value="kmeans"    {{ 'selected' if algo=='kmeans' else '' }}>K-Means</option>
+                <option value="meanshift" {{ 'selected' if algo=='meanshift' else '' }}>MeanShift</option>
+              </select>
+              <input type="number" class="form-control" name="k" min="2" max="8" step="1"
+                     value="{{ k }}" {{ 'disabled' if algo!='kmeans' or k_auto else '' }} placeholder="k (K-Means)">
+              <span class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" name="k_auto" value="1"
+                       {{ 'checked' if k_auto else '' }} {{ 'disabled' if algo!='kmeans' else '' }}>
+                <span class="ms-2">Auto (2–6)</span>
+              </span>
+            </div>
+            <div class="form-text">K-Means: pilih k manual atau centang Auto (mencari k terbaik dari 2–6). MeanShift: jumlah cluster otomatis.</div>
+          </div>
+
+          <div class="col-md-12 text-end mt-2">
+            <button type="submit" class="btn btn-primary">Terapkan</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- ==== Panel Training & Evaluasi (DIPINDAH KE BAWAH) ==== -->
     <div class="card shadow-sm p-3 mb-4">
       <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
         <div class="d-flex align-items-center gap-2">
@@ -160,74 +228,6 @@
       {% endif %}
     </div>
 
-    <!-- ==== Filter & Pengaturan ==== -->
-    <div class="card shadow-sm p-4 mb-4">
-      <h5 class="mb-3">Filter & Pengaturan</h5>
-
-      <form method="GET" action="/">
-        <div class="row g-3">
-          <div class="col-md-6">
-            <label class="filter-label">Nama Restoran</label>
-            <input type="text" class="form-control" name="nama" placeholder="Cari nama restoran..." value="{{ request.values.get('nama','') }}" />
-          </div>
-
-          <div class="col-md-6">
-            <label class="filter-label">Jenis Makanan</label>
-            <select class="form-select" name="jenis">
-              <option value="">Semua Jenis</option>
-              {% for jenis in jenis_list %}
-                <option value="{{ jenis }}" {{ 'selected' if request.values.get('jenis','')==jenis else '' }}>{{ jenis }}</option>
-              {% endfor %}
-            </select>
-          </div>
-
-          <div class="col-md-6">
-            <label class="filter-label">Harga (Rp): <span id="harga-range"></span></label>
-            <input type="range" class="form-range" name="harga_min" min="{{ harga_min }}" max="{{ harga_max }}" value="{{ harga_min_req or harga_min }}" step="1000" id="rangeHargaMin" />
-            <input type="range" class="form-range" name="harga_max" min="{{ harga_min }}" max="{{ harga_max }}" value="{{ harga_max_req or harga_max }}" step="1000" id="rangeHargaMax" />
-          </div>
-
-          <div class="col-md-6">
-            <label class="filter-label">Rating: <span id="rating-range"></span></label>
-            <input type="range" class="form-range" name="rating_min" min="{{ rating_min }}" max="{{ rating_max }}" value="{{ rating_min_req or rating_min }}" step="0.1" id="rangeRatingMin" />
-            <input type="range" class="form-range" name="rating_max" min="{{ rating_min }}" max="{{ rating_max }}" value="{{ rating_max_req or rating_max }}" step="0.1" id="rangeRatingMax" />
-          </div>
-
-          <div class="col-md-6">
-            <label class="filter-label">Kategori rekomendasi (opsional)</label>
-            <select class="form-select" name="cluster_label">
-              <option value="">Semua kategori</option>
-              {% for lab in tier_options %}
-                <option value="{{ lab }}" {{ 'selected' if lab == selected_cluster_label else '' }}>{{ lab }}</option>
-              {% endfor %}
-            </select>
-          </div>
-
-          <div class="col-md-6">
-            <label class="filter-label">Algoritma</label>
-            <div class="input-group">
-              <select class="form-select" name="algo">
-                <option value="kmeans"    {{ 'selected' if algo=='kmeans' else '' }}>K-Means</option>
-                <option value="meanshift" {{ 'selected' if algo=='meanshift' else '' }}>MeanShift</option>
-              </select>
-              <input type="number" class="form-control" name="k" min="2" max="8" step="1"
-                     value="{{ k }}" {{ 'disabled' if algo!='kmeans' or k_auto else '' }} placeholder="k (K-Means)">
-              <span class="input-group-text">
-                <input class="form-check-input mt-0" type="checkbox" name="k_auto" value="1"
-                       {{ 'checked' if k_auto else '' }} {{ 'disabled' if algo!='kmeans' else '' }}>
-                <span class="ms-2">Auto (2–6)</span>
-              </span>
-            </div>
-            <div class="form-text">K-Means: pilih k manual atau centang Auto (mencari k terbaik dari 2–6). MeanShift: jumlah cluster otomatis.</div>
-          </div>
-
-          <div class="col-md-12 text-end mt-2">
-            <button type="submit" class="btn btn-primary">Terapkan</button>
-          </div>
-        </div>
-      </form>
-    </div>
-
     {% if hasil is defined %}
       <h5 class="mb-2">
         Hasil Rekomendasi ({{ total_count }}) — menampilkan {{ limit }} pertama
@@ -244,7 +244,6 @@
               <th>Jenis Makanan</th>
               <th>Harga (Rp)</th>
               <th>Rating</th>
-              <th>Kategori</th>
               {% if trained %}
                 <th>Cluster ({{ 'KMeans' if algo=='kmeans' else 'MeanShift' }})</th>
               {% endif %}
@@ -263,12 +262,17 @@
                 {% for _ in range(rating_int) %}<span class="rating-star">&#9733;</span>{% endfor %}
                 <span class="ms-1 small">({{ rating_val }})</span>
               </td>
-              <td>{{ row['tier_label'] }}</td>
               {% if trained %}
                 <td>
                   {% set cid = row['cluster_kmeans'] %}
                   {% if cid is not none %}
-                    {{ cid }}
+                    {% if metrics.cluster_name_map and (cid in metrics.cluster_name_map) %}
+                      {{ metrics.cluster_name_map[cid] }}
+                    {% elif algo=='kmeans' and k==3 and (0 <= cid < 3) %}
+                      {{ ['Hemat','Menengah','Premium'][cid] }}
+                    {% else %}
+                      {{ cid }}
+                    {% endif %}
                   {% else %}
                     -
                   {% endif %}
