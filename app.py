@@ -78,7 +78,9 @@ METRICS = {
     "n": 0, "algo": None, "k": None,
     "k_mode": None, "best_k": None, "k_grid": None,
     "profiles": None, "cluster_name_map": None,
-    "scatter_b64": None
+    "scatter_b64": None,
+    # untuk mode Auto: simpan hasil per-k di sini
+    "by_k": {}  # {k: {"profiles":[...], "cluster_name_map":{...}, "scatter_b64":"...", "silhouette":..., "dbi":...}}
 }
 df[CSV_COL_CLUSTER] = pd.Series([pd.NA] * len(df), dtype="Int64")  # kosong di awal
 
@@ -150,21 +152,6 @@ def scatter_to_b64(X_orig, labels, centers_orig=None, title=None):
     except Exception:
         return None
 
-# ===== auto pilih k terbaik (Silhouette) =====
-def pick_best_k(X_scaled, k_min=2, k_max=6):
-    best = {"k": None, "sil": -1.0, "grid": []}
-    for k in range(k_min, k_max + 1):
-        km = KMeans(n_clusters=k, init="k-means++", n_init=10, random_state=0)
-        labels = km.fit_predict(X_scaled)
-        if len(set(labels)) < 2 or len(X_scaled) <= len(set(labels)):
-            s = None
-        else:
-            s = float(silhouette_score(X_scaled, labels))
-        best["grid"].append({"k": k, "silhouette": s})
-        if s is not None and s > best["sil"]:
-            best.update({"k": k, "sil": s, "km": km, "labels": labels})
-    return best
-
 # ===== helper nama manusiawi cluster berdasar mean harga =====
 def human_names_for_clusters(count):
     if count <= 0: return []
@@ -194,7 +181,8 @@ def train_on_subset(subset_index, algo="kmeans", k=3, k_auto=False):
             "dbi": None, "dbi_quality": None, "dbi_badge": None,
             "n": int(len(X_orig)), "algo": algo, "k": (k if algo == "kmeans" else None),
             "k_mode": "manual", "best_k": None, "k_grid": None,
-            "profiles": None, "cluster_name_map": None, "scatter_b64": None
+            "profiles": None, "cluster_name_map": None, "scatter_b64": None,
+            "by_k": {}
         })
         return
 
@@ -202,24 +190,64 @@ def train_on_subset(subset_index, algo="kmeans", k=3, k_auto=False):
     X = scaler.fit_transform(X_orig)
 
     labels, centers_std, k_used, k_grid = None, None, (k if algo == "kmeans" else None), None
+    by_k = {}
 
     if algo == "kmeans":
         if k_auto:
-            pick = pick_best_k(X)
-            k_used = pick["k"] or max(2, int(k or 3))
-            if pick.get("km") is not None:
-                labels = pick["labels"]
-                centers_std = pick["km"].cluster_centers_
-            else:
-                km = KMeans(n_clusters=k_used, init="k-means++", n_init=10, random_state=0)
-                labels = km.fit_predict(X)
-                centers_std = km.cluster_centers_
-            k_grid = pick.get("grid", [])
+            # loop k=2..6 -> simpan semua hasil ke by_k
+            k_min, k_max = 2, 6
+            grid = []
+            best_k, best_s = None, -1.0
+            for k_i in range(k_min, k_max + 1):
+                km = KMeans(n_clusters=k_i, init="k-means++", n_init=10, random_state=0)
+                lbl = km.fit_predict(X)
+                uniq = len(set(lbl))
+                if uniq >= 2 and len(X) > uniq:
+                    s = float(silhouette_score(X, lbl))
+                    d = float(davies_bouldin_score(X, lbl))
+                else:
+                    s, d = None, None
+                centers = scaler.inverse_transform(km.cluster_centers_)
+
+                # siapkan profil + nama
+                profiles = []
+                for cid in range(len(centers)):
+                    p, r = centers[cid]
+                    size = int((lbl == cid).sum())
+                    profiles.append({"id": cid, "mean_price": float(p), "mean_rating": float(r), "n": size})
+                ordered = sorted(profiles, key=lambda x: x["mean_price"])
+                name_map = {p["id"]: human_names_for_clusters(len(ordered))[i] for i, p in enumerate(ordered)}
+
+                sc_b64 = scatter_to_b64(
+                    X_orig, lbl, centers_orig=centers,
+                    title=f"K-Means (k={k_i}) · n={len(X_orig)}"
+                )
+
+                by_k[k_i] = {
+                    "profiles": profiles,
+                    "cluster_name_map": name_map,
+                    "scatter_b64": sc_b64,
+                    "silhouette": s,
+                    "dbi": d,
+                }
+                grid.append({"k": k_i, "silhouette": s})
+
+                if s is not None and s > best_s:
+                    best_s = s; best_k = k_i
+
+            # pakai best_k untuk menulis label ke dataframe
+            k_used = best_k or 3
+            km = KMeans(n_clusters=k_used, init="k-means++", n_init=10, random_state=0)
+            labels = km.fit_predict(X)
+            centers_std = km.cluster_centers_
+            k_grid = grid
+
         else:
             k_used = max(2, int(k or 3))
             km = KMeans(n_clusters=k_used, init="k-means++", n_init=10, random_state=0)
             labels = km.fit_predict(X)
             centers_std = km.cluster_centers_
+
     else:
         bw = estimate_bandwidth(X, quantile=0.3, n_samples=min(500, len(X)))
         ms = MeanShift(bandwidth=bw, bin_seeding=True)
@@ -230,7 +258,7 @@ def train_on_subset(subset_index, algo="kmeans", k=3, k_auto=False):
     df.loc[mask_train, CSV_COL_CLUSTER] = labels
     df[CSV_COL_CLUSTER] = df[CSV_COL_CLUSTER].astype("Int64")
 
-    # metrik
+    # metrik keseluruhan (untuk k_used)
     sil, dbi = None, None
     uniq = len(set(labels))
     if uniq >= 2 and len(X) > uniq:
@@ -238,22 +266,28 @@ def train_on_subset(subset_index, algo="kmeans", k=3, k_auto=False):
         dbi = float(davies_bouldin_score(X, labels))
     sil_q, dbi_q = label_silhouette(sil), label_dbi(dbi)
 
-    # profil cluster (balik ke skala asli)
-    centers = scaler.inverse_transform(centers_std)
+    # profil/label untuk k_used (non-auto atau best_k)
+    centers = StandardScaler().fit(X_orig).inverse_transform(centers_std) \
+              if centers_std is not None else None
     profiles = []
-    for cid in range(len(centers)):
-        p, r = centers[cid]
-        size = int((labels == cid).sum())
-        profiles.append({"id": cid, "mean_price": float(p), "mean_rating": float(r), "n": size})
-
-    # nama manusiawi berdasar urutan mean harga
-    ordered = sorted(profiles, key=lambda x: x["mean_price"])
-    readable_names = human_names_for_clusters(len(ordered))
-    name_map = {p["id"]: readable_names[i] for i, p in enumerate(ordered)}
+    if centers is not None:
+        for cid in range(len(centers)):
+            p, r = centers[cid]
+            size = int((labels == cid).sum())
+            profiles.append({"id": cid, "mean_price": float(p), "mean_rating": float(r), "n": size})
+        ordered = sorted(profiles, key=lambda x: x["mean_price"])
+        name_map = {p["id"]: human_names_for_clusters(len(ordered))[i] for i, p in enumerate(ordered)}
+    else:
+        name_map = {}
 
     # visual (opsional)
+    centers_used = None
+    try:
+        centers_used = StandardScaler().fit(X_orig).inverse_transform(centers_std)
+    except Exception:
+        pass
     scatter_b64 = scatter_to_b64(
-        X_orig, labels, centers_orig=centers,
+        X_orig, labels, centers_orig=centers_used,
         title=f"{'K-Means (k='+str(k_used)+')' if algo=='kmeans' else 'MeanShift'} · n={len(X_orig)}"
     )
 
@@ -264,7 +298,8 @@ def train_on_subset(subset_index, algo="kmeans", k=3, k_auto=False):
         "k_mode": ("auto" if (algo == "kmeans" and k_auto) else "manual"),
         "best_k": (k_used if algo == "kmeans" else None), "k_grid": k_grid,
         "profiles": profiles, "cluster_name_map": name_map,
-        "scatter_b64": scatter_b64
+        "scatter_b64": scatter_b64,
+        "by_k": by_k if (algo == "kmeans" and k_auto) else {}
     })
     TRAINED = True
 
@@ -273,20 +308,54 @@ def train_on_subset(subset_index, algo="kmeans", k=3, k_auto=False):
 def index():
     subset, used = get_filtered_df(request.values)
 
-    # pilihan algoritma & k
+    # pilihan algoritma & k (untuk state form)
     algo = (request.values.get("algo") or "kmeans").lower()
     algo = "meanshift" if algo == "meanshift" else "kmeans"
     k = int(request.values.get("k") or 3)
     k_auto = (request.values.get("k_auto") == "1")
 
+    # === PAGINATION ===
+    limit = int(request.values.get("limit") or 10)
+    page  = max(1, int(request.values.get("page") or 1))
     total_count = int(len(subset))
-    hasil_view = subset.head(10)
+    start = (page - 1) * limit
+    end   = min(start + limit, total_count)
+    hasil_view = subset.iloc[start:end]
+
+    # siapkan URL prev/next dgn mempertahankan query
+    args_now = request.values.to_dict(flat=True)
+    args_now["limit"] = limit
+    prev_url = url_for("index", **{**args_now, "page": page-1}) if start > 0 else None
+    next_url = url_for("index", **{**args_now, "page": page+1}) if end < total_count else None
+
+    # === VIEW-K untuk Auto ===
+    list_k = sorted((METRICS.get("by_k") or {}).keys())
+    try:
+        view_k = int(request.values.get("view_k")) if request.values.get("view_k") else None
+    except Exception:
+        view_k = None
+    if METRICS.get("k_mode") == "auto" and list_k:
+        if view_k is None:
+            view_k = METRICS.get("best_k")
+        metrics_view = METRICS["by_k"].get(view_k, {})
+    else:
+        metrics_view = {
+            "profiles": METRICS.get("profiles"),
+            "cluster_name_map": METRICS.get("cluster_name_map"),
+            "scatter_b64": METRICS.get("scatter_b64"),
+        }
 
     return render_template(
         "index.html",
         hasil=hasil_view.to_dict("records"),
-        total_count=total_count, limit=10,
-        trained=TRAINED, metrics=METRICS,
+        total_count=total_count, limit=limit, page=page,
+        start_idx=(start + 1 if total_count else 0), end_idx=end,
+        prev_url=prev_url, next_url=next_url,
+
+        trained=TRAINED, metrics=METRICS,      # ringkasan global
+        metrics_view=metrics_view,             
+        list_k=list_k, view_k=view_k, 
+
         algo=algo, k=k, k_auto=k_auto,
 
         jenis_list=JENIS_LIST,
@@ -321,7 +390,8 @@ def reset():
         "n": 0, "algo": None, "k": None,
         "k_mode": None, "best_k": None, "k_grid": None,
         "profiles": None, "cluster_name_map": None,
-        "scatter_b64": None
+        "scatter_b64": None,
+        "by_k": {}
     }
     return redirect(url_for("index", **request.values))
 

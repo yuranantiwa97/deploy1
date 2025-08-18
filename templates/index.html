@@ -22,7 +22,7 @@
 
   <div class="container pb-4">
 
-    <!-- ==== Filter & Pengaturan (DIPINDAH KE ATAS) ==== -->
+    <!-- ==== Filter & Pengaturan ==== -->
     <div class="card shadow-sm p-4 mb-4">
       <h5 class="mb-3">Filter & Pengaturan</h5>
 
@@ -30,7 +30,8 @@
         <div class="row g-3">
           <div class="col-md-6">
             <label class="filter-label">Nama Restoran</label>
-            <input type="text" class="form-control" name="nama" placeholder="Cari nama restoran..." value="{{ request.values.get('nama','') }}" />
+            <input type="text" class="form-control" name="nama" placeholder="Cari nama restoran..."
+                   value="{{ request.values.get('nama','') }}" />
           </div>
 
           <div class="col-md-6">
@@ -45,14 +46,18 @@
 
           <div class="col-md-6">
             <label class="filter-label">Harga (Rp): <span id="harga-range"></span></label>
-            <input type="range" class="form-range" name="harga_min" min="{{ harga_min }}" max="{{ harga_max }}" value="{{ harga_min_req or harga_min }}" step="1000" id="rangeHargaMin" />
-            <input type="range" class="form-range" name="harga_max" min="{{ harga_min }}" max="{{ harga_max }}" value="{{ harga_max_req or harga_max }}" step="1000" id="rangeHargaMax" />
+            <input type="range" class="form-range" name="harga_min" min="{{ harga_min }}" max="{{ harga_max }}"
+                   value="{{ harga_min_req or harga_min }}" step="1000" id="rangeHargaMin" />
+            <input type="range" class="form-range" name="harga_max" min="{{ harga_min }}" max="{{ harga_max }}"
+                   value="{{ harga_max_req or harga_max }}" step="1000" id="rangeHargaMax" />
           </div>
 
           <div class="col-md-6">
             <label class="filter-label">Rating: <span id="rating-range"></span></label>
-            <input type="range" class="form-range" name="rating_min" min="{{ rating_min }}" max="{{ rating_max }}" value="{{ rating_min_req or rating_min }}" step="0.1" id="rangeRatingMin" />
-            <input type="range" class="form-range" name="rating_max" min="{{ rating_min }}" max="{{ rating_max }}" value="{{ rating_max_req or rating_max }}" step="0.1" id="rangeRatingMax" />
+            <input type="range" class="form-range" name="rating_min" min="{{ rating_min }}" max="{{ rating_max }}"
+                   value="{{ rating_min_req or rating_min }}" step="0.1" id="rangeRatingMin" />
+            <input type="range" class="form-range" name="rating_max" min="{{ rating_min }}" max="{{ rating_max }}"
+                   value="{{ rating_max_req or rating_max }}" step="0.1" id="rangeRatingMax" />
           </div>
 
           <div class="col-md-6">
@@ -90,7 +95,7 @@
       </form>
     </div>
 
-    <!-- ==== Panel Training & Evaluasi (DIPINDAH KE BAWAH) ==== -->
+    <!-- ==== Panel Training & Evaluasi ==== -->
     <div class="card shadow-sm p-3 mb-4">
       <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
         <div class="d-flex align-items-center gap-2">
@@ -110,7 +115,7 @@
         </div>
 
         <div class="d-flex flex-wrap gap-2">
-          <!-- Train: kirim filter + pengaturan -->
+          <!-- Train -->
           <form method="POST" action="/train" class="d-inline">
             <input type="hidden" name="nama"        value="{{ request.values.get('nama','') }}">
             <input type="hidden" name="jenis"       value="{{ request.values.get('jenis','') }}">
@@ -141,6 +146,33 @@
           </form>
         </div>
       </div>
+
+      <!-- Dropdown "lihat k" saat Auto -->
+      {% if trained and metrics.k_mode == 'auto' and list_k %}
+        <div class="mt-2">
+          <form method="GET" class="ms-auto d-flex align-items-center gap-2">
+            <!-- pertahankan semua filter saat ganti k -->
+            <input type="hidden" name="nama"        value="{{ request.values.get('nama','') }}">
+            <input type="hidden" name="jenis"       value="{{ request.values.get('jenis','') }}">
+            <input type="hidden" name="harga_min"   value="{{ harga_min_req }}">
+            <input type="hidden" name="harga_max"   value="{{ harga_max_req }}">
+            <input type="hidden" name="rating_min"  value="{{ rating_min_req }}">
+            <input type="hidden" name="rating_max"  value="{{ rating_max_req }}">
+            <input type="hidden" name="cluster_label" value="{{ selected_cluster_label }}">
+            <input type="hidden" name="algo" value="{{ algo }}">
+            <input type="hidden" name="k" value="{{ k }}">
+            <input type="hidden" name="k_auto" value="{{ '1' if k_auto else '' }}">
+            <input type="hidden" name="page"  value="{{ page }}">
+            <input type="hidden" name="limit" value="{{ limit }}">
+            <label class="me-2 small text-muted">Lihat hasil k =</label>
+            <select name="view_k" class="form-select d-inline w-auto" onchange="this.form.submit()">
+              {% for kopt in list_k %}
+                <option value="{{ kopt }}" {{ 'selected' if view_k==kopt else '' }}>k={{ kopt }}</option>
+              {% endfor %}
+            </select>
+          </form>
+        </div>
+      {% endif %}
 
       <!-- Metrik evaluasi + label kualitas -->
       <div class="row g-3 mt-2">
@@ -187,7 +219,7 @@
         </div>
       {% endif %}
 
-      {% if trained and metrics.profiles %}
+      {% if trained and metrics_view.profiles %}
         <div class="mt-3">
           <h6 class="mb-2">Profil Cluster (subset ini)</h6>
           <div class="table-responsive">
@@ -202,10 +234,10 @@
                 </tr>
               </thead>
               <tbody>
-                {% for p in metrics.profiles %}
+                {% for p in metrics_view.profiles %}
                 <tr>
                   <td>{{ loop.index }}</td>
-                  <td>{{ metrics.cluster_name_map[p.id] if metrics.cluster_name_map else '-' }}</td>
+                  <td>{{ metrics_view.cluster_name_map[p.id] if metrics_view.cluster_name_map else '-' }}</td>
                   <td>{{ p.n }}</td>
                   <td>{{ p.mean_price | round(0) | int | rupiah }}</td>
                   <td>{{ '%.2f'|format(p.mean_rating) }}</td>
@@ -220,22 +252,22 @@
         </div>
       {% endif %}
 
-      {% if trained and metrics.scatter_b64 %}
+      {% if trained and metrics_view.scatter_b64 %}
         <div class="mt-3">
           <h6 class="mb-2">Visualisasi (Harga vs Rating)</h6>
-          <img class="img-fluid rounded border" alt="scatter" src="data:image/png;base64, {{ metrics.scatter_b64 }}">
+          <img class="img-fluid rounded border" alt="scatter" src="data:image/png;base64, {{ metrics_view.scatter_b64 }}">
         </div>
       {% endif %}
     </div>
 
     {% if hasil is defined %}
       <h5 class="mb-2">
-        Hasil Rekomendasi ({{ total_count }}) — menampilkan {{ limit }} pertama
+        Hasil Rekomendasi ({{ total_count }}) — menampilkan {{ start_idx }}–{{ end_idx }}
         {% if trained %}<span class="badge text-bg-success ms-2">Setelah Training</span>{% else %}<span class="badge text-bg-secondary ms-2">Sebelum Training</span>{% endif %}
       </h5>
 
       {% if hasil %}
-      <div class="table-responsive mb-5">
+      <div class="table-responsive mb-3">
         <table class="table table-striped table-hover align-middle">
           <thead>
             <tr>
@@ -245,14 +277,14 @@
               <th>Harga (Rp)</th>
               <th>Rating</th>
               {% if trained %}
-                <th>Cluster ({{ 'KMeans' if algo=='kmeans' else 'MeanShift' }})</th>
+                <th>Cluster ({{ 'KMeans' if metrics.algo=='kmeans' else 'MeanShift' }})</th>
               {% endif %}
             </tr>
           </thead>
           <tbody>
             {% for row in hasil %}
             <tr>
-              <td>{{ loop.index }}</td>
+              <td>{{ (start_idx - 1) + loop.index }}</td>
               <td>{{ row['Nama Restoran'] }}</td>
               <td>{{ row['Preferensi Makanan'] }}</td>
               <td>{{ row['Harga Rata-Rata Makanan di Toko (Rp)'] | rupiah }}</td>
@@ -268,14 +300,10 @@
                   {% if cid is not none %}
                     {% if metrics.cluster_name_map and (cid in metrics.cluster_name_map) %}
                       {{ metrics.cluster_name_map[cid] }}
-                    {% elif algo=='kmeans' and k==3 and (0 <= cid < 3) %}
-                      {{ ['Hemat','Menengah','Premium'][cid] }}
                     {% else %}
                       {{ cid }}
                     {% endif %}
-                  {% else %}
-                    -
-                  {% endif %}
+                  {% else %}-{% endif %}
                 </td>
               {% endif %}
             </tr>
@@ -283,6 +311,18 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Pagination -->
+      <nav class="d-flex justify-content-between align-items-center mb-5">
+        <div class="small text-muted">
+          Menampilkan {{ start_idx }}–{{ end_idx }} dari {{ total_count }} data
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-outline-secondary {{ 'disabled' if not prev_url }}" href="{{ prev_url or '#' }}">‹ Prev</a>
+          <a class="btn btn-outline-secondary {{ 'disabled' if not next_url }}" href="{{ next_url or '#' }}">Next ›</a>
+        </div>
+      </nav>
+
       {% else %}
         <div class="alert alert-warning">Tidak ada restoran yang cocok dengan filter.</div>
       {% endif %}
