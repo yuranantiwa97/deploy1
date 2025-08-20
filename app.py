@@ -139,7 +139,7 @@ def scatter_to_b64(X_orig, labels, centers_orig=None, title=None):
         return None
     try:
         fig, ax = plt.subplots(figsize=(5.5, 4.0), dpi=110)
-        sc = ax.scatter(X_orig[:, 0], X_orig[:, 1], c=labels, s=22, alpha=0.85)
+        ax.scatter(X_orig[:, 0], X_orig[:, 1], c=labels, s=22, alpha=0.85)
         if centers_orig is not None:
             ax.scatter(centers_orig[:, 0], centers_orig[:, 1], marker="x", s=80, linewidths=2)
         ax.set_xlabel("Harga (Rp)")
@@ -232,8 +232,12 @@ def train_on_subset(subset_index, algo="kmeans", k=3, k_auto=False):
                 }
                 grid.append({"k": k_i, "silhouette": s, "dbi": d})
 
+                # pilih best_k berdasarkan Silhouette terbesar (tie-break pakai DBI terkecil)
                 if s is not None:
-                    if (best_k is None) or (s > best_s) or (abs(s - best_s) < 1e-6 and d is not None and by_k.get(best_k, {}).get("dbi") is not None and d < by_k[best_k]["dbi"]):
+                    if (best_k is None) or (s > best_s) or (
+                        abs(s - best_s) < 1e-6 and d is not None and
+                        by_k.get(best_k, {}).get("dbi") is not None and d < by_k[best_k]["dbi"]
+                    ):
                         best_s = s; best_k = k_i
 
             # pakai best_k untuk menulis label ke dataframe
@@ -335,15 +339,38 @@ def index():
         view_k = int(request.values.get("view_k")) if request.values.get("view_k") else None
     except Exception:
         view_k = None
+
     if METRICS.get("k_mode") == "auto" and list_k:
         if view_k is None:
             view_k = METRICS.get("best_k")
-        metrics_view = METRICS["by_k"].get(view_k, {})
+
+        row = METRICS["by_k"].get(view_k, {}) or {}
+        sil = row.get("silhouette")
+        dbi = row.get("dbi")
+        sq = label_silhouette(sil)
+        dq = label_dbi(dbi)
+
+        metrics_view = {
+            "profiles": row.get("profiles") or METRICS.get("profiles"),
+            "cluster_name_map": row.get("cluster_name_map") or METRICS.get("cluster_name_map"),
+            "scatter_b64": row.get("scatter_b64") or METRICS.get("scatter_b64"),
+            "silhouette": sil, "dbi": dbi,
+            "sil_quality": sq[0], "sil_badge": sq[1],
+            "dbi_quality": dq[0], "dbi_badge": dq[1],
+            "k_view": view_k,
+        }
     else:
         metrics_view = {
             "profiles": METRICS.get("profiles"),
             "cluster_name_map": METRICS.get("cluster_name_map"),
             "scatter_b64": METRICS.get("scatter_b64"),
+            "silhouette": METRICS.get("silhouette"),
+            "dbi": METRICS.get("dbi"),
+            "sil_quality": METRICS.get("sil_quality"),
+            "sil_badge": METRICS.get("sil_badge"),
+            "dbi_quality": METRICS.get("dbi_quality"),
+            "dbi_badge": METRICS.get("dbi_badge"),
+            "k_view": METRICS.get("k"),
         }
 
     return render_template(
@@ -353,9 +380,9 @@ def index():
         start_idx=(start + 1 if total_count else 0), end_idx=end,
         prev_url=prev_url, next_url=next_url,
 
-        trained=TRAINED, metrics=METRICS,      # ringkasan global
-        metrics_view=metrics_view,             
-        list_k=list_k, view_k=view_k, 
+        trained=TRAINED, metrics=METRICS,      # ringkasan global (tetap dikirim)
+        metrics_view=metrics_view,             # metrik yang tampil (per-k saat Auto)
+        list_k=list_k, view_k=view_k,
 
         algo=algo, k=k, k_auto=k_auto,
 
