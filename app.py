@@ -230,10 +230,11 @@ def train_on_subset(subset_index, algo="kmeans", k=3, k_auto=False):
                     "silhouette": s,
                     "dbi": d,
                 }
-                grid.append({"k": k_i, "silhouette": s})
+                grid.append({"k": k_i, "silhouette": s, "dbi": d})
 
-                if s is not None and s > best_s:
-                    best_s = s; best_k = k_i
+                if s is not None:
+                    if (best_k is None) or (s > best_s) or (abs(s - best_s) < 1e-6 and d is not None and by_k.get(best_k, {}).get("dbi") is not None and d < by_k[best_k]["dbi"]):
+                        best_s = s; best_k = k_i
 
             # pakai best_k untuk menulis label ke dataframe
             k_used = best_k or 3

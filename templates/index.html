@@ -208,11 +208,13 @@
 
       {% if trained and metrics.k_grid %}
         <div class="mt-2">
-          <div class="small text-muted mb-1">Silhouette per k (2–6):</div>
+          <div class="small text-muted mb-1">Silhouette per k (2–6): Silhouette ↑ baik, DBI ↓ baik</div>
           <div class="d-flex flex-wrap gap-2">
             {% for row in metrics.k_grid %}
               <span class="badge text-bg-light border">
-                k={{ row.k }} → {{ row.silhouette is not none and ('%.3f'|format(row.silhouette)) or 'n/a' }}
+                k={{ row.k }} → 
+                Sil={{ row.silhouette is not none and ('%.3f'|format(row.silhouette)) or 'n/a' }},
+                DBI={{ row.dbi is not none and ('%.3f'|format(row.dbi)) or 'n/a' }}
               </span>
             {% endfor %}
           </div>
